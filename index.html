@@ -387,3 +387,24 @@
 
 </body>
 </html>
+<script>
+let cyberpunkMode = false;
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'c' && e.ctrlKey) {
+    e.preventDefault();
+    cyberpunkMode = !cyberpunkMode;
+    if (cyberpunkMode) {
+      document.documentElement.style.setProperty('--bg', '#000');
+      document.documentElement.style.setProperty('--primary', '#0f0');
+      document.documentElement.style.setProperty('--accent', '#f0f');
+      document.body.style.fontFamily = '"Courier New", monospace';
+      let glitch = document.createElement('div');
+      glitch.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,255,0,0.03);z-index:9999;pointer-events:none;animation:glitch 0.2s infinite';
+      glitch.id = 'glitch-overlay';
+      document.body.appendChild(glitch);
+    } else {
+      location.reload();
+    }
+  }
+});
+</script>
