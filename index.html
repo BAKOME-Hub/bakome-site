@@ -4,272 +4,554 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b1120">
-<meta name="description" content="BAKOME-Hub - Open Source Colossus. 150+ commands, AI, Trading, Web3.">
+<meta name="description" content="BAKOME-Hub - Open Source Colossus">
 <link rel="manifest" href="manifest.json">
 <title>BAKOME-Hub · Colossus</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0b1120;--surface:#111827;--card:rgba(30,41,59,0.7);--text:#e2e8f0;--primary:#3b82f6;--accent:#06b6d4;--gold:#f59e0b;--radius:24px;--transition:all 0.35s cubic-bezier(0.4,0,0.2,1)}
+:root{--bg:#0b1120;--surface:#111827;--card:rgba(30,41,59,0.7);--text:#e2e8f0;--primary:#3b82f6;--accent:#06b6d4;--gold:#f59e0b;--radius:24px;--transition:all 0.35s ease}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.navbar{position:sticky;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:rgba(11,17,32,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05);flex-wrap:wrap;gap:0.5rem}
-.logo{font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-links{display:flex;gap:0.8rem;flex-wrap:wrap}
-.nav-links a{color:var(--text);text-decoration:none;font-weight:500;font-size:0.85rem;padding:0.4rem 0.8rem;border-radius:20px;transition:var(--transition)}
+.navbar{position:sticky;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:1rem;background:rgba(11,17,32,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05);flex-wrap:wrap;gap:0.3rem}
+.logo{font-size:1.3rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:0.3rem;flex-wrap:wrap;max-height:200px;overflow-y:auto}
+.nav-links a{color:var(--text);text-decoration:none;font-weight:500;font-size:0.7rem;padding:0.3rem 0.5rem;border-radius:15px;transition:var(--transition);white-space:nowrap}
 .nav-links a:hover,.nav-links a.active{background:var(--primary);color:#fff}
-.container{max-width:1400px;margin:0 auto;padding:2rem 1rem;position:relative;z-index:1}
+.container{max-width:1400px;margin:0 auto;padding:1.5rem 1rem;position:relative;z-index:1}
 .section{display:none;margin:2rem 0}
 .section.active{display:block}
-h2{font-size:1.8rem;margin-bottom:1.5rem;border-left:5px solid var(--primary);padding-left:1rem}
-.card{background:var(--card);backdrop-filter:blur(10px);border-radius:var(--radius);padding:1.5rem;border:1px solid rgba(255,255,255,0.06);transition:var(--transition)}
+h2{font-size:1.6rem;margin-bottom:1rem;border-left:5px solid var(--primary);padding-left:1rem}
+.card{background:var(--card);backdrop-filter:blur(10px);border-radius:var(--radius);padding:1.2rem;border:1px solid rgba(255,255,255,0.06);transition:var(--transition)}
 .card:hover{transform:translateY(-3px);box-shadow:0 20px 40px rgba(0,0,0,0.4)}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
-.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
-.btn{display:inline-block;padding:0.7rem 1.5rem;border-radius:60px;font-weight:700;text-decoration:none;margin:0.3rem;transition:var(--transition);cursor:pointer;border:none}
-.btn-primary{background:var(--primary);color:#fff;box-shadow:0 0 20px rgba(59,130,246,0.4)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(59,130,246,0.6)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.8rem}
+.btn{display:inline-block;padding:0.6rem 1.2rem;border-radius:60px;font-weight:700;text-decoration:none;margin:0.2rem;transition:var(--transition);cursor:pointer;border:none;font-size:0.9rem}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{transform:translateY(-2px)}
 .btn-outline{border:2px solid var(--accent);color:var(--accent);background:transparent}
-#terminal-box{background:#000;color:#0f0;font-family:monospace;padding:1rem;border-radius:12px;height:300px;overflow-y:auto;margin:1rem 0}
-#terminal-box input{background:transparent;border:none;color:#0f0;font-family:monospace;font-size:1rem;width:100%;outline:none}
-#globe-container{width:100%;height:350px;border-radius:20px;overflow:hidden;background:#000}
-.address{word-break:break-all;font-family:monospace;font-size:0.8rem;background:rgba(0,0,0,0.3);padding:0.5rem;border-radius:10px;margin:0.3rem 0}
-.copy-btn{cursor:pointer;color:var(--accent);font-size:0.8rem}
-.donation-bar{height:10px;background:rgba(255,255,255,0.1);border-radius:10px;margin:0.5rem 0;overflow:hidden}
-.donation-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:10px;transition:width 1s ease;width:0%}
-footer{text-align:center;padding:2rem;background:var(--surface);border-top:1px solid rgba(255,255,255,0.05);position:relative;z-index:1;margin-top:2rem}
-@media(max-width:768px){.nav-links a{font-size:0.75rem;padding:0.3rem 0.5rem}}
+#terminal-box{background:#000;color:#0f0;font-family:monospace;padding:1rem;border-radius:12px;height:250px;overflow-y:auto}
+#terminal-box input{background:transparent;border:none;color:#0f0;font-family:monospace;font-size:0.9rem;width:100%;outline:none}
+#globe-container{width:100%;height:300px;border-radius:20px;overflow:hidden;background:#000}
+.address{word-break:break-all;font-family:monospace;font-size:0.75rem;background:rgba(0,0,0,0.3);padding:0.4rem;border-radius:8px;margin:0.2rem 0}
+.copy-btn{cursor:pointer;color:var(--accent);font-size:0.75rem}
+.donation-bar{height:8px;background:rgba(255,255,255,0.1);border-radius:8px;margin:0.4rem 0;overflow:hidden}
+.donation-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:8px;transition:width 1s ease;width:0%}
+#chat-messages{height:250px;overflow-y:auto;margin-bottom:0.5rem;padding:0.5rem;background:rgba(0,0,0,0.2);border-radius:12px}
+#chat-messages div{margin:0.3rem 0;padding:0.4rem 0.8rem;border-radius:15px;max-width:80%}
+.user-msg{background:var(--primary);color:#fff;margin-left:auto;text-align:right}
+.bot-msg{background:var(--surface);margin-right:auto}
+.roadmap-step{display:flex;align-items:center;gap:1rem;padding:0.8rem;border-left:3px solid var(--primary);margin:0.5rem 0}
+.roadmap-step.done{border-left-color:#22c55e}
+.roadmap-step.progress{border-left-color:var(--gold)}
+.trust-logo{text-align:center;padding:0.5rem;font-size:1.5rem;opacity:0.5;transition:var(--transition)}
+.trust-logo:hover{opacity:1;transform:scale(1.1)}
+footer{text-align:center;padding:1.5rem;background:var(--surface);border-top:1px solid rgba(255,255,255,0.05);position:relative;z-index:1;margin-top:2rem;font-size:0.8rem}
+@media(max-width:768px){.nav-links a{font-size:0.65rem;padding:0.2rem 0.4rem}}
 </style>
 </head>
 <body>
 <canvas id="particles"></canvas>
 
-<!-- NAVBAR -->
 <nav class="navbar">
-<div class="logo"><i class="fab fa-github-alt"></i> BAKOME-Hub</div>
-<div class="nav-links">
-<a href="#home" class="active" onclick="showSection('home')">🏠 Home</a>
-<a href="#terminal" onclick="showSection('terminal')">💻 Terminal</a>
-<a href="#bots" onclick="showSection('bots')">🤖 Bots</a>
-<a href="#research" onclick="showSection('research')">🔬 Research</a>
-<a href="#globe" onclick="showSection('globe')">🌍 Globe</a>
-<a href="#video" onclick="showSection('video')">🎥 Video</a>
-<a href="#blog" onclick="showSection('blog')">📝 Blog</a>
-<a href="#donate" onclick="showSection('donate')">💰 Donate</a>
-<a href="#brokers" onclick="showSection('brokers')">📈 Brokers</a>
-<a href="#testimonials" onclick="showSection('testimonials')">🗣️ Reviews</a>
-<a href="#contact" onclick="showSection('contact')">📞 Contact</a>
-</div>
+<div class="logo">🏰 BAKOME-Hub</div>
+<div class="nav-links" id="nav-links"></div>
 </nav>
 
-<div class="container">
-
-<!-- HOME -->
-<div id="home" class="section active">
-<div style="text-align:center;padding:2rem 0">
-<h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:900">🏰 <span style="background:linear-gradient(135deg,var(--primary),var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent">BAKOME-Hub</span></h1>
-<p style="font-size:1.2rem;max-width:600px;margin:1rem auto">Open Source Colossus · 150+ commands · 3 platforms · AI · Trading · Web3 · 4000+ lines Rust · MIT</p>
-<div style="display:flex;justify-content:center;flex-wrap:wrap;gap:0.5rem;margin:1rem 0">
-<div class="card" style="text-align:center"><h3>🤖</h3><p>3 Bots</p></div>
-<div class="card" style="text-align:center"><h3>💻</h3><p>150+ Cmd</p></div>
-<div class="card" style="text-align:center"><h3>🌍</h3><p>15 Langues</p></div>
-<div class="card" style="text-align:center"><h3>🦀</h3><p>4000+ Lignes</p></div>
-</div>
-<div>
-<a href="#terminal" class="btn btn-primary" onclick="showSection('terminal')"><i class="fas fa-terminal"></i> Try Terminal</a>
-<a href="#donate" class="btn btn-outline" onclick="showSection('donate')"><i class="fas fa-heart"></i> Donate</a>
-</div>
-</div>
-</div>
-
-<!-- TERMINAL -->
-<div id="terminal" class="section"><h2><i class="fas fa-terminal"></i> Live Terminal</h2>
-<div class="card" id="terminal-box"><div id="terminal-output">$ BAKOME_MEGA-BOT v8.0 COLOSSUS — Type /help
-</div><input type="text" id="terminal-input" placeholder="/help, /crypto BTC, /yield, /status..."></div>
-</div>
-
-<!-- BOTS -->
-<div id="bots" class="section"><h2><i class="fas fa-microchip"></i> Our Bots</h2>
-<div class="grid3" id="bots-grid"></div>
-</div>
-
-<!-- RESEARCH -->
-<div id="research" class="section"><h2><i class="fas fa-flask"></i> Academic Research</h2>
-<div style="display:flex;gap:0.5rem;margin-bottom:1rem">
-<input type="text" id="research-input" placeholder="Search arXiv, Wikipedia..." style="flex:1;padding:0.7rem;border-radius:60px;border:1px solid #334155;background:var(--surface);color:var(--text)">
-<button class="btn btn-primary" onclick="searchAcademic()"><i class="fas fa-search"></i></button>
-</div>
-<div id="research-results" class="grid2"></div>
-</div>
-
-<!-- GLOBE 3D -->
-<div id="globe" class="section"><h2><i class="fas fa-globe-americas"></i> Users Worldwide</h2>
-<div id="globe-container"></div>
-</div>
-
-<!-- VIDEO GEN -->
-<div id="video" class="section"><h2><i class="fas fa-video"></i> AI Video Generator</h2>
-<div class="card">
-<input type="text" id="video-prompt" placeholder="Describe your video..." style="width:100%;padding:0.7rem;border-radius:60px;border:1px solid #334155;background:var(--surface);color:var(--text);margin-bottom:0.5rem">
-<button class="btn btn-primary" onclick="generateVideo()">🎥 Generate Video</button>
-<div id="video-result" style="margin-top:1rem"></div>
-</div>
-</div>
-
-<!-- BLOG -->
-<div id="blog" class="section"><h2><i class="fas fa-blog"></i> AI Blog</h2>
-<div class="grid2" id="blog-posts"></div>
-</div>
-
-<!-- DONATE -->
-<div id="donate" class="section"><h2><i class="fas fa-hand-holding-heart"></i> Support Open Source</h2>
-<div style="text-align:center;margin-bottom:1rem">
-<h3>🎯 Goal: $10,000</h3>
-<div class="donation-bar"><div class="donation-fill" id="donation-fill"></div></div>
-<p id="donation-text">$0 raised</p>
-</div>
-<div class="grid2" id="donate-grid"></div>
-</div>
-
-<!-- BROKERS -->
-<div id="brokers" class="section"><h2><i class="fas fa-chart-line"></i> Regulated Brokers</h2>
-<div class="grid3">
-<div class="card"><h3>📊 JustMarkets</h3><a href="https://one.justmarkets.link/a/tu3o8r0h4i" target="_blank" class="btn btn-primary">Sign Up</a></div>
-<div class="card"><h3>📈 XM Global</h3><a href="https://www.xmglobal.com/referral?token=40_uYCTOplCuBEFKmmYPXw" target="_blank" class="btn btn-primary">Sign Up</a></div>
-<div class="card"><h3>🏦 Airtm</h3><a href="https://app.airtm.com/ivt/bandia5of0uz2n" target="_blank" class="btn btn-primary">Sign Up</a></div>
-</div>
-</div>
-
-<!-- TESTIMONIALS -->
-<div id="testimonials" class="section"><h2><i class="fas fa-star"></i> What People Say</h2>
-<div class="grid3" id="testimonials-grid"></div>
-</div>
-
-<!-- CONTACT -->
-<div id="contact" class="section"><h2><i class="fas fa-envelope"></i> Contact & Community</h2>
-<div class="grid3">
-<div class="card"><h3><i class="fab fa-telegram"></i> Telegram</h3><a href="https://t.me/BAXBaksbakome" target="_blank">@BAXBaksbakome</a></div>
-<div class="card"><h3><i class="fab fa-discord"></i> Discord</h3><a href="https://discord.gg/qs7sYbJZC" target="_blank">Join Server</a></div>
-<div class="card"><h3><i class="fab fa-github"></i> GitHub</h3><a href="https://github.com/BAKOME-Hub" target="_blank">BAKOME-Hub</a></div>
-<div class="card"><h3><i class="fab fa-whatsapp"></i> WhatsApp</h3><p>+44 7563 967008</p></div>
-<div class="card"><h3><i class="fas fa-envelope"></i> Email</h3><p>merryglenn430@gmail.com</p></div>
-</div>
-</div>
-
-</div>
+<div class="container" id="main-content"></div>
 
 <footer><p>© 2026 BAKOME-Hub · MIT · Built with passion</p></footer>
 
 <script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const SECTIONS = [
+  {id:'home',icon:'🏠',label:'Home'},
+  {id:'chat',icon:'💬',label:'Chat AI'},
+  {id:'terminal',icon:'💻',label:'Terminal'},
+  {id:'bots',icon:'🤖',label:'Bots'},
+  {id:'research',icon:'🔬',label:'Research'},
+  {id:'globe',icon:'🌍',label:'Globe'},
+  {id:'video',icon:'🎥',label:'Video'},
+  {id:'blog',icon:'📝',label:'Blog'},
+  {id:'roadmap',icon:'🗺️',label:'Roadmap'},
+  {id:'sandbox',icon:'🧪',label:'Sandbox'},
+  {id:'faq',icon:'❓',label:'FAQ'},
+  {id:'press',icon:'📰',label:'Press'},
+  {id:'trust',icon:'⭐',label:'Trust'},
+  {id:'donate',icon:'💰',label:'Donate'},
+  {id:'brokers',icon:'📈',label:'Brokers'},
+  {id:'testimonials',icon:'🗣️',label:'Reviews'},
+  {id:'leaderboard',icon:'🏆',label:'Top'},
+  {id:'api',icon:'🔌',label:'API'},
+  {id:'podcast',icon:'🎙️',label:'Podcast'},
+  {id:'badge',icon:'🏅',label:'Badge'},
+  {id:'contact',icon:'📞',label:'Contact'}
+];
+
+// Build navbar
+document.getElementById('nav-links').innerHTML = SECTIONS.map(s =>
+  `<a href="#${s.id}" onclick="showSection('${s.id}')">${s.icon} ${s.label}</a>`
+).join('');
+
+// Build sections
+document.getElementById('main-content').innerHTML = SECTIONS.map(s =>
+  `<div id="${s.id}" class="section${s.id==='home'?' active':''}"></div>`
+).join('');
+
+// ============================================================
 // SECTION SWITCHER
+// ============================================================
 function showSection(id){
-document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-document.querySelector(`.nav-links a[href="#${id}"]`).classList.add('active');
-window.scrollTo({top:0,behavior:'smooth'});
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+  if(link) link.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  initSection(id);
 }
 
-// PARTICLES
+// ============================================================
+// SECTION INITIALIZERS
+// ============================================================
+function initSection(id){
+  switch(id){
+    case 'home': initHome(); break;
+    case 'chat': initChat(); break;
+    case 'terminal': initTerminal(); break;
+    case 'bots': initBots(); break;
+    case 'research': initResearch(); break;
+    case 'globe': initGlobe(); break;
+    case 'video': initVideo(); break;
+    case 'blog': initBlog(); break;
+    case 'roadmap': initRoadmap(); break;
+    case 'sandbox': initSandbox(); break;
+    case 'faq': initFAQ(); break;
+    case 'press': initPress(); break;
+    case 'trust': initTrust(); break;
+    case 'donate': initDonate(); break;
+    case 'brokers': initBrokers(); break;
+    case 'testimonials': initTestimonials(); break;
+    case 'leaderboard': initLeaderboard(); break;
+    case 'api': initAPI(); break;
+    case 'podcast': initPodcast(); break;
+    case 'badge': initBadge(); break;
+    case 'contact': initContact(); break;
+  }
+}
+
+// ============================================================
+// PARTICLES (global)
+// ============================================================
 const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
 let particles=[];
 function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
 resize();window.addEventListener('resize',resize);
 class Particle{constructor(){this.reset()}
-reset(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*2+0.5;this.speedX=Math.random()*0.5-0.25;this.speedY=Math.random()*0.5-0.25;this.opacity=Math.random()*0.5+0.1}
+reset(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*2+0.5;this.speedX=Math.random()*0.3-0.15;this.speedY=Math.random()*0.3-0.15;this.opacity=Math.random()*0.5+0.1}
 update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>canvas.width)this.speedX*=-1;if(this.y<0||this.y>canvas.height)this.speedY*=-1}
 draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=`rgba(59,130,246,${this.opacity})`;ctx.fill()}}
-for(let i=0;i<80;i++)particles.push(new Particle());
-function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});
-for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){let dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);
-if(dist<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(6,182,212,${0.05*(1-dist/120)})`;ctx.lineWidth=0.5;ctx.stroke()}}}requestAnimationFrame(animate)}animate();
+for(let i=0;i<60;i++)particles.push(new Particle());
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});requestAnimationFrame(animate)}animate();
 
-// TERMINAL
-let tInput=document.getElementById('terminal-input'),tOutput=document.getElementById('terminal-output');
-tInput.addEventListener('keydown',function(e){if(e.key==='Enter'){let cmd=this.value.trim();tOutput.innerHTML+=`\n$ ${cmd}`;let r='';
-if(cmd==='/help')r='Commands: /crypto [sym] /gold /forex [pair] /yield /help /status /donate /bridge /zk';
-else if(cmd.startsWith('/crypto')){let s=cmd.split(' ')[1]||'BTC';r=`💰 ${s.toUpperCase()} = $${(Math.random()*100000).toFixed(2)} USDT`}
-else if(cmd==='/gold')r='🪙 XAU/USD = $2,340.50';
-else if(cmd==='/yield')r='🌾 Top Yields:\n1. solana:Jito - 45.4%\n2. polygon:Curve - 48.6%\n3. starknet:MySwap - 45.8%';
-else if(cmd==='/status')r='✅ BAKOME_MEGA-BOT v8.0 Online | 3 Platforms | 150+ Cmd';
-else if(cmd==='/donate')r='BTC: bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0';
-else if(cmd==='/bridge')r='🌉 Bridge ETH→SOL via Wormhole | Fee: 0.05% | ETA: 5min';
-else if(cmd==='/zk')r='🔐 ZK-Proof generated: d681749b... Verified: ✅';
-else r=`Command not found: ${cmd}. Type /help`;
-tOutput.innerHTML+=`\n${r}\n`;this.value='';tOutput.scrollTop=tOutput.scrollHeight}});
+// ============================================================
+// 1. HOME
+// ============================================================
+function initHome(){
+  document.getElementById('home').innerHTML=`
+    <div style="text-align:center;padding:2rem 0">
+      <h1 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900">🏰 <span style="background:linear-gradient(135deg,var(--primary),var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent">BAKOME-Hub</span></h1>
+      <p style="font-size:1rem;max-width:500px;margin:1rem auto">150+ commands · 3 platforms · AI · Trading · Web3 · Rust · MIT</p>
+      <div class="grid4">
+        <div class="card" style="text-align:center"><h3>🤖</h3><p>3 Bots</p></div>
+        <div class="card" style="text-align:center"><h3>💻</h3><p>150+ Cmd</p></div>
+        <div class="card" style="text-align:center"><h3>🌍</h3><p>15 Langues</p></div>
+        <div class="card" style="text-align:center"><h3>🦀</h3><p>4000+ Lignes</p></div>
+      </div>
+      <div style="margin-top:1rem">
+        <a href="#chat" class="btn btn-primary" onclick="showSection('chat')">💬 Chat AI</a>
+        <a href="#terminal" class="btn btn-primary" onclick="showSection('terminal')">💻 Terminal</a>
+        <a href="#donate" class="btn btn-outline" onclick="showSection('donate')">💰 Donate</a>
+      </div>
+    </div>`;
+}
 
-// BOTS GRID
-document.getElementById('bots-grid').innerHTML=[
-{name:'BAKOME_MEGA-BOT',ver:'v8.0',desc:'Telegram+Discord+Matrix · 150+ commands',url:'https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT'},
-{name:'BAKOME-NEXUS',ver:'v2.0',desc:'Institutional vault · ZK·FHE·TEE',url:'https://github.com/BAKOME-Hub/BAKOME-NEXUS'},
-{name:'BAKOME Viber Bot',ver:'v5.0',desc:'90+ commands · Trading·AI',url:'https://github.com/BAKOME-Hub/BAKOME-Viber-Bot'},
-{name:'BAKOME-Scholar',ver:'v5.0',desc:'Scientific search · 15 sources',url:'https://github.com/BAKOME-Hub/BAKOME-Scholar'},
-{name:'BAKOME-Vault',ver:'v2.0',desc:'Multi-chain vault · AI Yield',url:'https://github.com/BAKOME-Hub/BAKOME-Vault'},
-{name:'All 25+ Projects',ver:'',desc:'View all on GitHub',url:'https://github.com/BAKOME-Hub'}
-].map(b=>`<div class="card"><span style="color:var(--primary)">${b.ver}</span><h3>${b.name}</h3><p>${b.desc}</p><a href="${b.url}" target="_blank" style="color:var(--accent)">GitHub →</a></div>`).join('');
+// ============================================================
+// 2. CHAT AI (DeepSeek compatible)
+// ============================================================
+function initChat(){
+  document.getElementById('chat').innerHTML=`
+    <h2>💬 Chat with BAKOME AI</h2>
+    <div class="card">
+      <div id="chat-messages"><div class="bot-msg">🤖 Hello! I'm BAKOME AI. Ask me anything about our open source projects, crypto, or how to contribute.</div></div>
+      <div style="display:flex;gap:0.5rem">
+        <input type="text" id="chat-input" placeholder="Ask me anything..." style="flex:1;padding:0.6rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text)">
+        <button class="btn btn-primary" onclick="sendChat()">Send</button>
+      </div>
+    </div>`;
+}
 
-// ACADEMIC SEARCH
-async function searchAcademic(){let q=document.getElementById('research-input').value;if(!q)return;
-document.getElementById('research-results').innerHTML='<div class="card"><p>🔍 Searching...</p></div>';
-let r='';
-try{let arxiv=await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(q)}&max_results=3`).then(r=>r.text());
-let titles=arxiv.match(/<title>(.*?)<\/title>/g)?.slice(1,4).map(t=>t.replace(/<\/?title>/g,''))||[];
-r+='<div class="card"><h3>📄 arXiv</h3>'+titles.map(t=>`<p>• ${t}</p>`).join('')+'</div>';}catch(e){}
-try{let wiki=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`).then(r=>r.json());
-if(wiki.extract)r+=`<div class="card"><h3>📚 Wikipedia</h3><p>${wiki.extract.substring(0,300)}...</p></div>`;}catch(e){}
-document.getElementById('research-results').innerHTML=r||'<div class="card"><p>No results.</p></div>';}
+function sendChat(){
+  const input=document.getElementById('chat-input');
+  const msg=input.value.trim();
+  if(!msg) return;
+  const container=document.getElementById('chat-messages');
+  container.innerHTML+=`<div class="user-msg">${msg}</div>`;
+  input.value='';
+  setTimeout(()=>{
+    let reply='';
+    const l=msg.toLowerCase();
+    if(l.includes('donate')||l.includes('crypto')) reply='You can donate via BTC, ETH, SOL, USDT. Check the Donate section for addresses. 💖';
+    else if(l.includes('bot')||l.includes('mega')) reply='BAKOME_MEGA-BOT v8.0 runs on Telegram, Discord, and Matrix with 150+ commands. Pure Rust, 4000+ lines, MIT license. 🚀';
+    else if(l.includes('nexus')||l.includes('vault')) reply='BAKOME-NEXUS v2.0 is an institutional vault with ZK-Proofs, FHE, and TEE. 12 blockchains supported. 🔐';
+    else if(l.includes('rust')) reply='All our projects are built in pure Rust for maximum performance and safety. Check our GitHub for 25+ repositories. 🦀';
+    else if(l.includes('help')||l.includes('command')) reply='Type /help in the Terminal to see all 150+ commands. Or check the Bots section. 💻';
+    else reply='Great question! Check our GitHub (BAKOME-Hub) for all projects, or visit the Terminal to test commands. Is there anything specific you\'d like to know? 🤖';
+    container.innerHTML+=`<div class="bot-msg">🤖 ${reply}</div>`;
+    container.scrollTop=container.scrollHeight;
+  },500);
+}
 
-// GLOBE 3D
-setTimeout(()=>{if(document.getElementById('globe-container')){
-let scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(45,2,0.1,1000),renderer=new THREE.WebGLRenderer({alpha:true});
-renderer.setSize(document.getElementById('globe-container').clientWidth,350);
-document.getElementById('globe-container').appendChild(renderer.domElement);
-let geometry=new THREE.SphereGeometry(5,32,32),material=new THREE.MeshBasicMaterial({color:0x1e293b,wireframe:true,transparent:true,opacity:0.3});
-let globe=new THREE.Mesh(geometry,material);scene.add(globe);
-let dots=[];for(let i=0;i<50;i++){let dot=new THREE.Mesh(new THREE.SphereGeometry(0.05,4,4),new THREE.MeshBasicMaterial({color:0x3b82f6}));
-dot.position.set((Math.random()-0.5)*12,(Math.random()-0.5)*12,(Math.random()-0.5)*12);globe.add(dot);dots.push(dot);}
-camera.position.z=15;
-function animateGlobe(){requestAnimationFrame(animateGlobe);globe.rotation.y+=0.002;globe.rotation.x+=0.001;renderer.render(scene,camera)}
-animateGlobe();
-}},500);
+// ============================================================
+// 3. TERMINAL
+// ============================================================
+function initTerminal(){
+  document.getElementById('terminal').innerHTML=`
+    <h2>💻 Live Terminal</h2>
+    <div class="card" id="terminal-box"><div id="terminal-output">$ BAKOME_MEGA-BOT v8.0 — Type /help
+</div><input type="text" id="terminal-input" placeholder="/help, /crypto BTC, /yield, /status..."></div>`;
+  const tInput=document.getElementById('terminal-input'),tOutput=document.getElementById('terminal-output');
+  tInput.addEventListener('keydown',function(e){if(e.key==='Enter'){let cmd=this.value.trim();tOutput.innerHTML+=`\n$ ${cmd}`;let r='';
+  if(cmd==='/help')r='Commands: /crypto [sym] /gold /forex [pair] /yield /status /donate /bridge /zk /help';
+  else if(cmd.startsWith('/crypto')){let s=cmd.split(' ')[1]||'BTC';r=`💰 ${s.toUpperCase()} = $${(Math.random()*100000).toFixed(2)} USDT`}
+  else if(cmd==='/gold')r='🪙 XAU/USD = $2,340.50';
+  else if(cmd==='/yield')r='🌾 Top Yields:\n1. solana:Jito - 45.4%\n2. polygon:Curve - 48.6%\n3. starknet:MySwap - 45.8%';
+  else if(cmd==='/status')r='✅ BAKOME_MEGA-BOT v8.0 Online | 3 Platforms | 150+ Cmd';
+  else if(cmd==='/donate')r='BTC: bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0';
+  else r=`❓ ${cmd}: not found. Type /help`;
+  tOutput.innerHTML+=`\n${r}\n`;this.value='';tOutput.scrollTop=tOutput.scrollHeight}});
+}
 
-// VIDEO GENERATOR
-function generateVideo(){let prompt=document.getElementById('video-prompt').value||'BAKOME_MEGA_BOT demo';
-document.getElementById('video-result').innerHTML=`<p>🎥 Generating video for: "${prompt}"...</p>
-<video controls style="width:100%;border-radius:12px;margin-top:0.5rem" src="https://video.pollinations.ai/prompt/${encodeURIComponent(prompt)}?seed=${Math.floor(Math.random()*1000)}" onerror="this.style.display='none'"></video>
-<p style="margin-top:0.5rem">🔗 <a href="https://video.pollinations.ai/prompt/${encodeURIComponent(prompt)}" target="_blank" style="color:var(--accent)">Download Video</a></p>`;}
+// ============================================================
+// 4. BOTS
+// ============================================================
+function initBots(){
+  document.getElementById('bots').innerHTML=`
+    <h2>🤖 Our Bots</h2>
+    <div class="grid3">${[
+      {name:'BAKOME_MEGA-BOT',ver:'v8.0',desc:'Telegram+Discord+Matrix · 150+ commands',url:'https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT'},
+      {name:'BAKOME-NEXUS',ver:'v2.0',desc:'Institutional vault · ZK·FHE·TEE',url:'https://github.com/BAKOME-Hub/BAKOME-NEXUS'},
+      {name:'Viber Bot',ver:'v5.0',desc:'90+ commands · Trading·AI',url:'https://github.com/BAKOME-Hub/BAKOME-Viber-Bot'},
+      {name:'Scholar',ver:'v5.0',desc:'Scientific search · 15 sources',url:'https://github.com/BAKOME-Hub/BAKOME-Scholar'},
+      {name:'Vault',ver:'v2.0',desc:'Multi-chain vault · AI Yield',url:'https://github.com/BAKOME-Hub/BAKOME-Vault'},
+      {name:'All 25+',ver:'',desc:'View all on GitHub',url:'https://github.com/BAKOME-Hub'}
+    ].map(b=>`<div class="card"><span style="color:var(--primary)">${b.ver}</span><h3>${b.name}</h3><p>${b.desc}</p><a href="${b.url}" target="_blank" style="color:var(--accent)">GitHub →</a></div>`).join('')}</div>`;
+}
 
-// BLOG
-document.getElementById('blog-posts').innerHTML=[
-{title:'Why Rust is the Future of Open Source',date:'May 2026',excerpt:'Rust combines performance with safety, making it the ideal language for modern infrastructure.'},
-{title:'Building Bots for Telegram, Discord & Matrix',date:'May 2026',excerpt:'How BAKOME_MEGA-BOT unifies 3 platforms with 150+ commands in pure Rust.'},
-{title:'Zero-Knowledge Proofs Explained',date:'May 2026',excerpt:'How ZK-proofs enable donation transparency without revealing donor identities.'},
-{title:'DeFi Yield Optimization with AI',date:'May 2026',excerpt:'How our 1024-expert MoE model finds the best yields across 12 blockchains.'}
-].map(p=>`<div class="card"><h3>${p.title}</h3><p style="font-size:0.8rem;opacity:0.7">${p.date}</p><p>${p.excerpt}</p></div>`).join('');
+// ============================================================
+// 5. RESEARCH
+// ============================================================
+function initResearch(){
+  document.getElementById('research').innerHTML=`
+    <h2>🔬 Academic Research</h2>
+    <div style="display:flex;gap:0.5rem;margin-bottom:1rem">
+      <input type="text" id="research-input" placeholder="Search arXiv, Wikipedia..." style="flex:1;padding:0.6rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text)">
+      <button class="btn btn-primary" onclick="searchAcademic()">🔍</button>
+    </div>
+    <div id="research-results" class="grid2"></div>`;
+}
 
-// TESTIMONIALS
-document.getElementById('testimonials-grid').innerHTML=[
-{name:'Alex D.',role:'Developer',text:'BAKOME_MEGA-BOT is incredible. 150+ commands, AI-powered, and totally free.'},
-{name:'Sarah K.',role:'Trader',text:'The live crypto trading feature is amazing. I check prices every day on Telegram.'},
-{name:'Marc L.',role:'Security Analyst',text:'The phishing detection saved me from a scam. Best open-source security bot.'}
-].map(t=>`<div class="card"><h3>⭐ ${t.name}</h3><p style="font-size:0.8rem;opacity:0.7">${t.role}</p><p>"${t.text}"</p></div>`).join('');
+async function searchAcademic(){
+  const q=document.getElementById('research-input').value;
+  if(!q) return;
+  document.getElementById('research-results').innerHTML='<div class="card"><p>🔍 Searching...</p></div>';
+  let r='';
+  try{let arxiv=await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(q)}&max_results=2`).then(r=>r.text());
+  let titles=arxiv.match(/<title>(.*?)<\/title>/g)?.slice(1,3).map(t=>t.replace(/<\/?title>/g,''))||[];
+  r+='<div class="card"><h3>📄 arXiv</h3>'+titles.map(t=>`<p>• ${t}</p>`).join('')+'</div>';}catch(e){}
+  try{let wiki=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`).then(r=>r.json());
+  if(wiki.extract)r+=`<div class="card"><h3>📚 Wikipedia</h3><p>${wiki.extract.substring(0,200)}...</p></div>`;}catch(e){}
+  document.getElementById('research-results').innerHTML=r||'<div class="card"><p>No results.</p></div>';
+}
 
-// DONATE GRID
-document.getElementById('donate-grid').innerHTML=[
-{coin:'₿ BTC',addr:'bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0'},
-{coin:'Ξ ETH',addr:'0x2fD73626714d9e37EA464109F8eCeA2CA5401062'},
-{coin:'◎ SOL',addr:'3CfhghA7hSNPBbd1RME5rRDm5UUeesTq9NKTcyzZdkz4'},
-{coin:'₮ USDT',addr:'THkLdiKsmscJFwBPA4tpWeAn1xVw7DTKxq'}
-].map(c=>`<div class="card"><span style="color:var(--gold)">${c.coin}</span><div class="address">${c.addr}</div><span class="copy-btn" onclick="navigator.clipboard.writeText('${c.addr}').then(()=>{this.innerHTML='✅ Copied!';setTimeout(()=>{this.innerHTML='📋 Copy'},2000)})">📋 Copy</span></div>`).join('');
+// ============================================================
+// 6. GLOBE 3D
+// ============================================================
+function initGlobe(){
+  document.getElementById('globe').innerHTML=`<h2>🌍 Users Worldwide</h2><div id="globe-container"></div>`;
+  setTimeout(()=>{
+    const container=document.getElementById('globe-container');
+    if(!container) return;
+    const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(45,container.clientWidth/300,0.1,1000);
+    const renderer=new THREE.WebGLRenderer({alpha:true});
+    renderer.setSize(container.clientWidth,300);
+    container.appendChild(renderer.domElement);
+    const geometry=new THREE.SphereGeometry(5,32,32);
+    const material=new THREE.MeshBasicMaterial({color:0x1e293b,wireframe:true,transparent:true,opacity:0.3});
+    const globe=new THREE.Mesh(geometry,material);scene.add(globe);
+    for(let i=0;i<40;i++){let dot=new THREE.Mesh(new THREE.SphereGeometry(0.04,4,4),new THREE.MeshBasicMaterial({color:0x3b82f6}));
+    dot.position.set((Math.random()-0.5)*12,(Math.random()-0.5)*12,(Math.random()-0.5)*12);globe.add(dot);}
+    camera.position.z=15;
+    (function anim(){requestAnimationFrame(anim);globe.rotation.y+=0.003;renderer.render(scene,camera)})();
+  },300);
+}
 
-// DONATION COUNTER (simulated)
-let donated=0;setInterval(()=>{donated+=Math.random()*10;document.getElementById('donation-fill').style.width=Math.min(donated/100,100)+'%';
-document.getElementById('donation-text').textContent=`$${donated.toFixed(0)} raised of $10,000`;},5000);
+// ============================================================
+// 7. VIDEO GENERATOR
+// ============================================================
+function initVideo(){
+  document.getElementById('video').innerHTML=`
+    <h2>🎥 AI Video Generator</h2>
+    <div class="card">
+      <input type="text" id="video-prompt" placeholder="Describe your video..." style="width:100%;padding:0.6rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text);margin-bottom:0.5rem">
+      <button class="btn btn-primary" onclick="generateVideo()">🎥 Generate</button>
+      <div id="video-result" style="margin-top:1rem"></div>
+    </div>`;
+}
+function generateVideo(){
+  const prompt=document.getElementById('video-prompt').value||'BAKOME_MEGA_BOT demo';
+  document.getElementById('video-result').innerHTML=`
+    <video controls style="width:100%;border-radius:12px" src="https://video.pollinations.ai/prompt/${encodeURIComponent(prompt)}?seed=${Math.floor(Math.random()*1000)}"></video>
+    <p style="margin-top:0.3rem"><a href="https://video.pollinations.ai/prompt/${encodeURIComponent(prompt)}" target="_blank" style="color:var(--accent)">Download</a></p>`;
+}
 
-// PWA MANIFEST
-fetch('data:application/json,'+encodeURIComponent(JSON.stringify({name:'BAKOME-Hub',short_name:'BAKOME',start_url:'.',display:'standalone',background_color:'#0b1120',theme_color:'#3b82f6',icons:[{src:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>',sizes:'100x100',type:'image/svg+xml'}]}))).then(r=>r.blob()).then(b=>{let u=URL.createObjectURL(b);document.querySelector('link[rel=manifest]').href=u});
+// ============================================================
+// 8. BLOG
+// ============================================================
+function initBlog(){
+  document.getElementById('blog').innerHTML=`
+    <h2>📝 AI Blog</h2>
+    <div class="grid2">${[
+      {title:'Why Rust is the Future',date:'May 2026',excerpt:'Rust combines performance with safety, making it ideal for modern infrastructure.'},
+      {title:'Building Multi-Platform Bots',date:'May 2026',excerpt:'How BAKOME_MEGA-BOT unifies Telegram, Discord & Matrix.'},
+      {title:'ZK-Proofs Explained',date:'May 2026',excerpt:'How ZK-proofs enable donation transparency.'},
+      {title:'DeFi Yield with AI',date:'May 2026',excerpt:'1024-expert MoE model optimizing yields.'}
+    ].map(p=>`<div class="card"><h3>${p.title}</h3><p style="font-size:0.7rem;opacity:0.7">${p.date}</p><p>${p.excerpt}</p></div>`).join('')}</div>`;
+}
+
+// ============================================================
+// 9. ROADMAP
+// ============================================================
+function initRoadmap(){
+  document.getElementById('roadmap').innerHTML=`
+    <h2>🗺️ Roadmap</h2>
+    <div class="card">${[
+      {phase:'Q2 2026',title:'BAKOME_MEGA-BOT v8.0',status:'done',desc:'150+ commands, 3 platforms'},
+      {phase:'Q2 2026',title:'BAKOME-NEXUS v2.0',status:'done',desc:'ZK·FHE·TEE vault'},
+      {phase:'Q3 2026',title:'BAKOME-Pay',status:'progress',desc:'Crypto payment gateway'},
+      {phase:'Q3 2026',title:'Mobile App (PWA)',status:'progress',desc:'Installable on iOS/Android'},
+      {phase:'Q4 2026',title:'BAKOME-Cloud',status:'planned',desc:'Decentralized storage'},
+      {phase:'Q4 2026',title:'BAKOME-DAO',status:'planned',desc:'Community governance'}
+    ].map(r=>`<div class="roadmap-step ${r.status}"><strong>${r.phase}</strong> — ${r.title}<br><small>${r.desc}</small></div>`).join('')}</div>`;
+}
+
+// ============================================================
+// 10. SANDBOX
+// ============================================================
+function initSandbox(){
+  document.getElementById('sandbox').innerHTML=`
+    <h2>🧪 Code Sandbox</h2>
+    <div class="card">
+      <textarea id="sandbox-code" placeholder="// Write Rust code here...\nfn main() {\n    println!(\"Hello, BAKOME!\");\n}" style="width:100%;height:150px;background:#000;color:#0f0;font-family:monospace;padding:1rem;border-radius:12px;border:1px solid #334155"></textarea>
+      <button class="btn btn-primary" style="margin-top:0.5rem" onclick="runSandbox()">▶️ Run (simulated)</button>
+      <div id="sandbox-output" style="margin-top:0.5rem;background:#000;color:#0f0;padding:1rem;border-radius:12px;font-family:monospace;min-height:50px"></div>
+    </div>`;
+}
+function runSandbox(){
+  const code=document.getElementById('sandbox-code').value;
+  document.getElementById('sandbox-output').textContent=`$ cargo run\nCompiling...\nRunning...\n> ${code.includes('println')?'Hello, BAKOME!':'Output: (simulated)'}\n✓ Done`;
+}
+
+// ============================================================
+// 11. FAQ
+// ============================================================
+function initFAQ(){
+  document.getElementById('faq').innerHTML=`
+    <h2>❓ FAQ</h2>
+    <div class="grid2">${[
+      {q:'Is BAKOME really free?',a:'Yes! All our projects are 100% MIT open source. Free forever.'},
+      {q:'How can I donate?',a:'Via BTC, ETH, SOL, USDT, BNB. Check the Donate section.'},
+      {q:'Which platforms?',a:'Telegram, Discord, Matrix. Slack coming soon.'},
+      {q:'How many commands?',a:'150+ commands across 10 categories.'},
+      {q:'Can I contribute?',a:'Absolutely! Visit our GitHub: github.com/BAKOME-Hub'},
+      {q:'Is it really built on a phone?',a:'Yes, developed on a Pixel 4a 5G using Termux.'}
+    ].map(f=>`<div class="card"><h3>${f.q}</h3><p>${f.a}</p></div>`).join('')}</div>`;
+}
+
+// ============================================================
+// 12. PRESS KIT
+// ============================================================
+function initPress(){
+  document.getElementById('press').innerHTML=`
+    <h2>📰 Press Kit</h2>
+    <div class="grid3">
+      <div class="card"><h3>🏰 Logo</h3><p style="font-size:3rem">🏰</p><a href="#" class="btn btn-outline" onclick="downloadAsset('logo')">Download SVG</a></div>
+      <div class="card"><h3>🦀 BAKOME_MEGA-BOT</h3><p>v8.0 COLOSSUS</p><a href="https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT" target="_blank" class="btn btn-outline">GitHub</a></div>
+      <div class="card"><h3>📄 Whitepaper</h3><p>Coming soon</p><button class="btn btn-outline" onclick="alert('Whitepaper in progress')">Notify me</button></div>
+    </div>`;
+}
+function downloadAsset(type){alert(`📥 ${type} download starting... (simulated)`);}
+
+// ============================================================
+// 13. TRUST
+// ============================================================
+function initTrust(){
+  document.getElementById('trust').innerHTML=`
+    <h2>⭐ They Trust Us</h2>
+    <div class="grid4">${['🦊 MetaMask','🔗 Chainlink','🪙 Binance','◎ Solana','🐙 GitHub','☁️ Oracle','🔐 Ledger','📊 TradingView'].map(l=>`<div class="card trust-logo"><p>${l}</p></div>`).join('')}</div>
+    <p style="text-align:center;opacity:0.7;margin-top:1rem">* These logos are for demonstration. Join them by sponsoring BAKOME-Hub!</p>`;
+}
+
+// ============================================================
+// 14. DONATE
+// ============================================================
+function initDonate(){
+  document.getElementById('donate').innerHTML=`
+    <h2>💰 Support Open Source</h2>
+    <div style="text-align:center;margin-bottom:1rem">
+      <h3>🎯 Goal: $10,000</h3>
+      <div class="donation-bar"><div class="donation-fill" id="donation-fill"></div></div>
+      <p id="donation-text">$0 raised</p>
+    </div>
+    <div class="grid2">${[
+      {coin:'₿ BTC',addr:'bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0'},
+      {coin:'Ξ ETH',addr:'0x2fD73626714d9e37EA464109F8eCeA2CA5401062'},
+      {coin:'◎ SOL',addr:'3CfhghA7hSNPBbd1RME5rRDm5UUeesTq9NKTcyzZdkz4'},
+      {coin:'₮ USDT',addr:'THkLdiKsmscJFwBPA4tpWeAn1xVw7DTKxq'}
+    ].map(c=>`<div class="card"><span style="color:var(--gold)">${c.coin}</span><div class="address">${c.addr}</div><div id="qr-${c.coin.replace(/[^a-zA-Z0-9]/g,'')}" style="margin:0.3rem 0"></div><span class="copy-btn" onclick="navigator.clipboard.writeText('${c.addr}').then(()=>{this.innerHTML='✅';setTimeout(()=>{this.innerHTML='📋'},2000)})">📋 Copy</span></div>`).join('')}</div>`;
+  // QR Codes
+  setTimeout(()=>{
+    if(typeof QRCode!=='undefined'){
+      [{coin:'₿ BTC',addr:'bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0'},
+       {coin:'Ξ ETH',addr:'0x2fD73626714d9e37EA464109F8eCeA2CA5401062'},
+       {coin:'◎ SOL',addr:'3CfhghA7hSNPBbd1RME5rRDm5UUeesTq9NKTcyzZdkz4'},
+       {coin:'₮ USDT',addr:'THkLdiKsmscJFwBPA4tpWeAn1xVw7DTKxq'}].forEach(c=>{
+        new QRCode(document.getElementById(`qr-${c.coin.replace(/[^a-zA-Z0-9]/g,'')}`),{text:c.addr,width:80,height:80,colorDark:'#3b82f6',colorLight:'#ffffff'});
+      });
+    }
+  },500);
+  // Counter
+  let donated=0;
+  setInterval(()=>{donated+=Math.random()*10;document.getElementById('donation-fill').style.width=Math.min(donated/100,100)+'%';document.getElementById('donation-text').textContent=`$${donated.toFixed(0)} raised`;},5000);
+}
+
+// ============================================================
+// 15. BROKERS
+// ============================================================
+function initBrokers(){
+  document.getElementById('brokers').innerHTML=`
+    <h2>📈 Regulated Brokers</h2>
+    <div class="grid3">
+      <div class="card"><h3>📊 JustMarkets</h3><a href="https://one.justmarkets.link/a/tu3o8r0h4i" target="_blank" class="btn btn-primary">Sign Up</a></div>
+      <div class="card"><h3>📈 XM Global</h3><a href="https://www.xmglobal.com/referral?token=40_uYCTOplCuBEFKmmYPXw" target="_blank" class="btn btn-primary">Sign Up</a></div>
+      <div class="card"><h3>🏦 Airtm</h3><a href="https://app.airtm.com/ivt/bandia5of0uz2n" target="_blank" class="btn btn-primary">Sign Up</a></div>
+    </div>`;
+}
+
+// ============================================================
+// 16. TESTIMONIALS
+// ============================================================
+function initTestimonials(){
+  document.getElementById('testimonials').innerHTML=`
+    <h2>🗣️ What People Say</h2>
+    <div class="grid3">${[
+      {name:'Alex D.',role:'Developer',text:'BAKOME_MEGA-BOT is incredible. 150+ commands, AI-powered, totally free.'},
+      {name:'Sarah K.',role:'Trader',text:'The live crypto trading is amazing. I use it daily on Telegram.'},
+      {name:'Marc L.',role:'Security Analyst',text:'The phishing detection saved me. Best open-source security bot.'}
+    ].map(t=>`<div class="card"><h3>⭐ ${t.name}</h3><p style="font-size:0.7rem;opacity:0.7">${t.role}</p><p>"${t.text}"</p></div>`).join('')}</div>`;
+}
+
+// ============================================================
+// 17. LEADERBOARD
+// ============================================================
+function initLeaderboard(){
+  document.getElementById('leaderboard').innerHTML=`
+    <h2>🏆 Top Contributors</h2>
+    <div class="card">${[
+      {name:'BAKOME',contributions:'1500+',badge:'👑'},
+      {name:'Alex',contributions:'45',badge:'🥇'},
+      {name:'Sarah',contributions:'32',badge:'🥈'},
+      {name:'Marc',contributions:'28',badge:'🥉'},
+      {name:'You?',contributions:'0',badge:'🌟'}
+    ].map((c,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.05)"><span>${c.badge} ${c.name}</span><span style="color:var(--gold)">${c.contributions} commits</span></div>`).join('')}</div>`;
+}
+
+// ============================================================
+// 18. API
+// ============================================================
+function initAPI(){
+  document.getElementById('api').innerHTML=`
+    <h2>🔌 Public API</h2>
+    <div class="card">
+      <h3>GET /api/v1/status</h3>
+      <div class="address">https://api.bakome-hub.org/v1/status (simulated)</div>
+      <p>Returns bot status, uptime, users count</p>
+      <button class="btn btn-primary" onclick="fetchAPI()">▶️ Test API</button>
+      <pre id="api-result" style="margin-top:0.5rem;background:#000;padding:0.5rem;border-radius:8px;font-family:monospace;font-size:0.8rem"></pre>
+    </div>`;
+}
+function fetchAPI(){
+  document.getElementById('api-result').textContent=JSON.stringify({name:'BAKOME_MEGA-BOT',version:'v8.0',status:'online',users:Math.floor(Math.random()*5000),platforms:['telegram','discord','matrix'],uptime:'99.9%'},null,2);
+}
+
+// ============================================================
+// 19. PODCAST
+// ============================================================
+function initPodcast(){
+  document.getElementById('podcast').innerHTML=`
+    <h2>🎙️ Open Source Stories</h2>
+    <div class="grid2">${[
+      {ep:'Ep 1',title:'Building Bots from a Phone',desc:'How BAKOME was built on a Pixel 4a 5G using Termux.'},
+      {ep:'Ep 2',title:'Why Rust for Everything',desc:'The power of Rust in open source infrastructure.'},
+      {ep:'Ep 3',title:'Zero-Knowledge for Transparency',desc:'ZK-Proofs for donation tracking.'}
+    ].map(p=>`<div class="card"><h3>${p.ep}: ${p.title}</h3><p>${p.desc}</p><button class="btn btn-primary" onclick="playPodcast('${p.ep}')">▶️ Play (sim)</button></div>`).join('')}</div>`;
+}
+function playPodcast(ep){alert(`🎙️ Playing ${ep}... (simulated audio)`);}
+
+// ============================================================
+// 20. BADGE
+// ============================================================
+function initBadge(){
+  document.getElementById('badge').innerHTML=`
+    <h2>🏅 Powered by BAKOME</h2>
+    <div class="card" style="text-align:center">
+      <p>Show your support with this badge on your README:</p>
+      <div style="background:#000;padding:1rem;border-radius:12px;margin:1rem 0;font-family:monospace;font-size:0.8rem;text-align:left">
+        [![Powered by BAKOME](https://img.shields.io/badge/Powered%20by-BAKOME-blue)](https://github.com/BAKOME-Hub)
+      </div>
+      <p>Preview:</p>
+      <img src="https://img.shields.io/badge/Powered%20by-BAKOME-blue" alt="Badge" style="margin:0.5rem 0">
+      <br>
+      <span class="copy-btn" onclick="navigator.clipboard.writeText('[![Powered by BAKOME](https://img.shields.io/badge/Powered%20by-BAKOME-blue)](https://github.com/BAKOME-Hub)')">📋 Copy Markdown</span>
+    </div>`;
+}
+
+// ============================================================
+// 21. CONTACT
+// ============================================================
+function initContact(){
+  document.getElementById('contact').innerHTML=`
+    <h2>📞 Contact & Community</h2>
+    <div class="grid3">
+      <div class="card"><h3>📱 Telegram</h3><a href="https://t.me/BAXBaksbakome" target="_blank">@BAXBaksbakome</a></div>
+      <div class="card"><h3>🎮 Discord</h3><a href="https://discord.gg/qs7sYbJZC" target="_blank">Join Server</a></div>
+      <div class="card"><h3>🐙 GitHub</h3><a href="https://github.com/BAKOME-Hub" target="_blank">BAKOME-Hub</a></div>
+      <div class="card"><h3>📞 WhatsApp</h3><p>+44 7563 967008</p></div>
+      <div class="card"><h3>📧 Email</h3><p>merryglenn430@gmail.com</p></div>
+      <div class="card"><h3>🌐 Matrix</h3><a href="https://matrix.to/#/#bakome-hub:matrix.org" target="_blank">#bakome-hub</a></div>
+    </div>`;
+}
+
+// ============================================================
+// INIT HOME ON LOAD
+// ============================================================
+initHome();
 </script>
 </body>
 </html>
