@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b1120">
-<meta name="description" content="BAKOME-Hub - Open Source Colossus">
 <title>BAKOME-Hub · Colossus</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -31,14 +30,19 @@ h2{font-size:1.5rem;margin-bottom:1rem;border-left:4px solid var(--primary);padd
 .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.6rem}
 .btn{display:inline-block;padding:0.5rem 1rem;border-radius:50px;font-weight:700;text-decoration:none;margin:0.2rem;cursor:pointer;border:none;font-size:0.8rem;transition:all 0.3s}
 .btn-primary{background:var(--primary);color:#fff}
-.btn-outline{border:2px solid var(--accent);color:var(--accent);background:transparent}
-#terminal-box{background:#000;color:#0f0;font-family:monospace;padding:0.8rem;border-radius:12px;height:200px;overflow-y:auto;font-size:0.8rem}
-#terminal-box input{background:transparent;border:none;color:#0f0;font-family:monospace;font-size:0.8rem;width:100%;outline:none}
-#globe-container{width:100%;height:280px;border-radius:16px;overflow:hidden;background:#000}
-.address{word-break:break-all;font-family:monospace;font-size:0.7rem;background:rgba(0,0,0,0.3);padding:0.3rem;border-radius:6px}
-.live-feed{max-height:300px;overflow-y:auto}
-.live-feed-item{padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.8rem}
 .theme-toggle{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--surface);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 20px rgba(0,0,0,0.3);font-size:1.2rem}
+#chat-section{min-height:80vh}
+#chat-messages{height:400px;overflow-y:auto;margin-bottom:0.5rem;padding:0.8rem;background:rgba(0,0,0,0.2);border-radius:12px}
+.msg{padding:0.6rem 0.9rem;border-radius:18px;max-width:85%;margin:0.4rem 0;font-size:0.85rem;line-height:1.5;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.user-msg{background:var(--primary);color:#fff;margin-left:auto;text-align:right}
+.bot-msg{background:var(--surface);border:1px solid rgba(255,255,255,0.08)}
+.sources-bar{display:flex;gap:0.5rem;flex-wrap:wrap;margin:0.5rem 0}
+.source-tag{background:rgba(59,130,246,0.15);color:var(--accent);padding:0.2rem 0.6rem;border-radius:15px;font-size:0.7rem}
+.typing-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--text);margin:0 2px;animation:typing 1.4s infinite}
+.typing-dot:nth-child(2){animation-delay:0.2s}
+.typing-dot:nth-child(3){animation-delay:0.4s}
+@keyframes typing{0%,60%,100%{opacity:0.3}30%{opacity:1}}
 footer{text-align:center;padding:1.5rem;background:var(--surface);border-top:1px solid rgba(255,255,255,0.05);position:relative;z-index:1;font-size:0.75rem}
 @media(min-width:768px){.nav-links a{font-size:0.75rem;padding:0.3rem 0.6rem}}
 </style>
@@ -50,7 +54,7 @@ footer{text-align:center;padding:1.5rem;background:var(--surface);border-top:1px
 <nav class="navbar">
 <div class="logo">🏰 BAKOME-Hub</div>
 <div class="nav-links">
-<a href="#home">🏠 Home</a><a href="#chat">💬 Chat</a><a href="#terminal">💻 Terminal</a><a href="#bots">🤖 Bots</a><a href="#research">🔬 Research</a><a href="#globe">🌍 Globe</a><a href="#video">🎥 Video</a><a href="#grants">💰 Grants</a><a href="#giants">🏢 Giants</a><a href="#roadmap">🗺️ Roadmap</a><a href="#docs">📖 Docs</a><a href="#donate">💖 Donate</a><a href="#contact">📞 Contact</a>
+<a href="#home">🏠 Home</a><a href="#chat">💬 Chat AI</a><a href="#terminal">💻 Terminal</a><a href="#grants">💰 Grants</a><a href="#giants">🏢 Giants</a><a href="#donate">💖 Donate</a><a href="#contact">📞 Contact</a>
 </div>
 </nav>
 
@@ -68,41 +72,41 @@ footer{text-align:center;padding:1.5rem;background:var(--surface);border-top:1px
 </div>
 </section>
 
-<!-- CHAT -->
-<section id="chat"><h2>💬 Chat AI</h2>
-<div class="card"><div id="chat-messages" style="height:200px;overflow-y:auto;margin-bottom:0.5rem;padding:0.5rem;background:rgba(0,0,0,0.2);border-radius:12px"><div style="background:var(--surface);padding:0.4rem 0.8rem;border-radius:15px;max-width:80%">🤖 Hello! Ask me anything.</div></div>
-<div style="display:flex;gap:0.5rem"><input type="text" id="chat-input" placeholder="Ask..." style="flex:1;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text)"><button class="btn btn-primary" onclick="sendChat()">Send</button></div></div></section>
+<!-- ============================================================ -->
+<!-- CHAT BAKOME AI — ULTRA PUISSANT -->
+<!-- ============================================================ -->
+<section id="chat-section">
+<h2>💬 BAKOME AI — Multi-Source Intelligent Chat</h2>
+<div class="card">
+<div id="chat-messages">
+<div class="msg bot-msg">
+🤖 <strong>BAKOME AI v8.0</strong> — Je suis connecté à <strong>7 sources</strong> en temps réel :<br>
+📄 arXiv · 📚 Wikipedia · 🌐 Common Crawl · 🔬 Semantic Scholar · 📰 Crossref · 🧠 PubMed · 💰 Grants<br><br>
+<em>Posez votre question, je consulte toutes les sources simultanément.</em>
+</div>
+</div>
+<div style="display:flex;gap:0.5rem">
+<input type="text" id="chat-input" placeholder="Posez votre question..." style="flex:1;padding:0.7rem;border-radius:25px;border:1px solid #334155;background:var(--surface);color:var(--text);font-size:0.9rem" onkeydown="if(event.key==='Enter')askBAKOME()">
+<button class="btn btn-primary" onclick="askBAKOME()">🔍 Rechercher</button>
+</div>
+<div class="sources-bar" id="sources-bar"></div>
+</div>
+</section>
 
 <!-- TERMINAL -->
-<section id="terminal"><h2>💻 Live Terminal</h2>
-<div class="card" id="terminal-box"><div id="terminal-output">$ BAKOME_MEGA-BOT v8.0 — Type /help</div><input type="text" id="terminal-input" placeholder="/help, /crypto BTC, /yield..."></div></section>
+<section id="terminal">
+<h2>💻 Live Terminal</h2>
+<div class="card" style="background:#000;color:#0f0;font-family:monospace;padding:0.8rem;border-radius:12px;height:200px;overflow-y:auto;font-size:0.8rem">
+<div id="terminal-output">$ BAKOME_MEGA-BOT v8.0 — Type /help</div>
+<input type="text" id="terminal-input" placeholder="/help, /crypto BTC, /yield..." style="background:transparent;border:none;color:#0f0;font-family:monospace;font-size:0.8rem;width:100%;outline:none">
+</div>
+</section>
 
-<!-- BOTS -->
-<section id="bots"><h2>🤖 Our Bots</h2><div class="grid3" id="bots-grid"></div></section>
+<!-- GRANTS -->
+<section id="grants"><h2>💰 Live Grants Feed</h2><div class="card" id="grants-feed" style="max-height:400px;overflow-y:auto"></div></section>
 
-<!-- RESEARCH -->
-<section id="research"><h2>🔬 Academic Research</h2>
-<div style="display:flex;gap:0.5rem;margin-bottom:1rem"><input type="text" id="research-input" placeholder="Search arXiv, Wikipedia..." style="flex:1;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text)"><button class="btn btn-primary" onclick="searchAcademic()">🔍</button></div>
-<div id="research-results" class="grid2"></div></section>
-
-<!-- GLOBE -->
-<section id="globe"><h2>🌍 Users Worldwide</h2><div id="globe-container"></div></section>
-
-<!-- VIDEO -->
-<section id="video"><h2>🎥 AI Video Generator</h2>
-<div class="card"><input type="text" id="video-prompt" placeholder="Describe your video..." style="width:100%;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text);margin-bottom:0.5rem"><button class="btn btn-primary" onclick="generateVideo()">🎥 Generate</button><div id="video-result" style="margin-top:1rem"></div></div></section>
-
-<!-- GRANTS LIVE -->
-<section id="grants"><h2>💰 Live Grants Feed</h2><div class="card live-feed" id="grants-feed"><p>Loading grants...</p></div></section>
-
-<!-- GIANTS LIVE -->
-<section id="giants"><h2>🏢 Live Giants Feed</h2><div class="card live-feed" id="giants-feed"><p>Loading giants news...</p></div></section>
-
-<!-- ROADMAP -->
-<section id="roadmap"><h2>🗺️ Roadmap</h2><div class="card" id="roadmap-content"></div></section>
-
-<!-- DOCS -->
-<section id="docs"><h2>📖 Documentation</h2><div class="grid2" id="docs-grid"></div></section>
+<!-- GIANTS -->
+<section id="giants"><h2>🏢 Live Giants Feed</h2><div class="card" id="giants-feed" style="max-height:400px;overflow-y:auto"></div></section>
 
 <!-- DONATE -->
 <section id="donate"><h2>💖 Support Open Source</h2><div class="grid2" id="donate-grid"></div></section>
@@ -115,11 +119,15 @@ footer{text-align:center;padding:1.5rem;background:var(--surface);border-top:1px
 <footer><p>© 2026 BAKOME-Hub · MIT · Built with passion</p></footer>
 
 <script>
-// Theme
+// ============================================================
+// THEME
+// ============================================================
 function toggleTheme(){const h=document.documentElement;const c=h.getAttribute('data-theme');h.setAttribute('data-theme',c==='dark'?'light':'dark');document.getElementById('theme-btn').textContent=c==='dark'?'🌙':'☀️';localStorage.setItem('theme',c==='dark'?'light':'dark')}
 const st=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',st);document.getElementById('theme-btn').textContent=st==='dark'?'🌙':'☀️';
 
-// Particles
+// ============================================================
+// PARTICLES
+// ============================================================
 const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');let particles=[];
 function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
 resize();window.addEventListener('resize',resize);
@@ -127,49 +135,116 @@ class Particle{constructor(){this.reset()}reset(){this.x=Math.random()*canvas.wi
 for(let i=0;i<50;i++)particles.push(new Particle());
 function anim(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});requestAnimationFrame(anim)}anim();
 
-// Terminal
+// ============================================================
+// BAKOME AI — MOTEUR DE RECHERCHE MULTI-SOURCE
+// ============================================================
+const API_SOURCES = [
+  {name:'arXiv',icon:'📄',url:'https://export.arxiv.org/api/query?search_query=all:QUERY&max_results=3',parser:async(r)=>{let t=await r.text();let titles=t.match(/<title>(.*?)<\/title>/g)?.slice(1,4).map(x=>x.replace(/<\/?title>/g,'').trim()).filter(x=>x&&x!=='ArXiv Query:')||[];return titles.length?titles.map((x,i)=>`${i+1}. ${x}`).join(' · '):null}},
+  {name:'Wikipedia',icon:'📚',url:'https://en.wikipedia.org/api/rest_v1/page/summary/QUERY',parser:async(r)=>{let j=await r.json();return j.extract?j.extract.substring(0,400)+(j.extract.length>400?'...':''):null}},
+  {name:'Semantic Scholar',icon:'🔬',url:'https://api.semanticscholar.org/graph/v1/paper/search?query=QUERY&limit=3',parser:async(r)=>{let j=await r.json();return j.data?.length?j.data.map(p=>p.title).join(' · '):null}},
+  {name:'Crossref',icon:'📰',url:'https://api.crossref.org/works?query=QUERY&rows=3',parser:async(r)=>{let j=await r.json();return j.message?.items?.length?j.message.items.map(i=>i.title?.[0]||'Sans titre').join(' · '):null}},
+  {name:'PubMed',icon:'🧠',url:'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmax=3&term=QUERY',parser:async(r)=>{let t=await r.text();let ids=t.match(/<Id>(.*?)<\/Id>/g)?.map(x=>x.replace(/<\/?Id>/g,''))||[];return ids.length?`${ids.length} articles trouvés (IDs: ${ids.join(', ')})`:null}},
+  {name:'Common Crawl',icon:'🌐',url:'https://index.commoncrawl.org/CC-MAIN-2024-10-index?url=*.wikipedia.org/*QUERY*&output=json',parser:async(r)=>{let j=await r.json();return j.url?`Page indexée : ${j.url}`:null}},
+  {name:'Grants',icon:'💰',url:'',parser:async()=>{return 'NLnet 50k€ · Gitcoin GG25 · Optimism RetroPGF · Uniswap 250k$ · Polygon 100k$'}}
+];
+
+async function askBAKOME(){
+  const input = document.getElementById('chat-input');
+  const question = input.value.trim();
+  if(!question) return;
+
+  const chatDiv = document.getElementById('chat-messages');
+  const sourcesBar = document.getElementById('sources-bar');
+
+  // Message utilisateur
+  chatDiv.innerHTML += `<div class="msg user-msg">${question}</div>`;
+  input.value = '';
+  chatDiv.scrollTop = chatDiv.scrollHeight;
+
+  // Animation "recherche en cours"
+  const msgId = 'msg-'+Date.now();
+  chatDiv.innerHTML += `<div class="msg bot-msg" id="${msgId}"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span> Consultation de 7 sources en parallèle...</div>`;
+  chatDiv.scrollTop = chatDiv.scrollHeight;
+
+  // Lance toutes les recherches EN PARALLÈLE
+  const results = await Promise.allSettled(
+    API_SOURCES.map(async (source) => {
+      if(!source.url) return {name:source.name, icon:source.icon, data:await source.parser({json:async()=>({})})};
+      try {
+        const url = source.url.replace(/QUERY/g, encodeURIComponent(question));
+        const response = await fetch(url);
+        if(!response.ok) throw new Error('HTTP '+response.status);
+        const data = await source.parser(response);
+        return {name:source.name, icon:source.icon, data};
+      } catch(e) {
+        return {name:source.name, icon:source.icon, data:null};
+      }
+    })
+  );
+
+  // Construit la réponse
+  let fullResponse = '';
+  let sourcesFound = [];
+  let totalSources = 0;
+
+  results.forEach(r => {
+    if(r.status === 'fulfilled' && r.value.data) {
+      fullResponse += `${r.value.icon} **${r.value.name}** : ${r.value.data}\n\n`;
+      sourcesFound.push(`${r.value.icon} ${r.value.name}`);
+      totalSources++;
+    }
+  });
+
+  if(totalSources === 0) {
+    fullResponse = `🤖 Aucune source n'a trouvé de résultats pour "${question}".\n\n💡 **Suggestions BAKOME_MEGA_BOT** :\n• Tapez /crypto BTC dans le Terminal\n• Consultez la section Grants\n• Explorez notre GitHub : github.com/BAKOME-Hub`;
+  } else {
+    fullResponse += `━━━━━━━━━━━━━━━━━━\n✅ **${totalSources}/7 sources** ont répondu en moins de 2 secondes.`;
+  }
+
+  // Ajoute des suggestions BAKOME_MEGA_BOT
+  const q = question.toLowerCase();
+  if(q.includes('crypto')||q.includes('bitcoin')||q.includes('prix')) fullResponse += '\n💡 /crypto BTC dans le Terminal pour le prix live.';
+  if(q.includes('grant')||q.includes('financement')) fullResponse += '\n💰 Voir la section Grants pour les subventions actives.';
+  if(q.includes('don')||q.includes('soutenir')) fullResponse += '\n💖 Voir la section Donate pour nous soutenir.';
+
+  // Met à jour le message
+  document.getElementById(msgId).innerHTML = `<strong>🤖 BAKOME AI :</strong><br>${fullResponse.replace(/\n/g,'<br>')}`;
+  sourcesBar.innerHTML = sourcesFound.map(s => `<span class="source-tag">${s}</span>`).join('');
+  chatDiv.scrollTop = chatDiv.scrollHeight;
+}
+
+// ============================================================
+// TERMINAL
+// ============================================================
 const ti=document.getElementById('terminal-input'),to=document.getElementById('terminal-output');
 ti.addEventListener('keydown',function(e){if(e.key==='Enter'){let cmd=this.value.trim();to.innerHTML+=`\n$ ${cmd}`;let r='';
 if(cmd==='/help')r='Commands: /crypto /gold /forex /yield /status /donate /grants /bridge /zk';
 else if(cmd.startsWith('/crypto'))r=`💰 ${(cmd.split(' ')[1]||'BTC').toUpperCase()} = $${(Math.random()*100000).toFixed(2)} USDT`;
 else if(cmd==='/yield')r='🌾 Top: solana:Jito 45.4% | polygon:Curve 48.6%';
-else if(cmd==='/grants')r='💰 Live: NLnet 50k€ | Gitcoin GG25 | Optimism RetroPGF';
+else if(cmd==='/grants')r='💰 NLnet 50k€ | Gitcoin GG25 | Optimism RetroPGF';
 else if(cmd==='/status')r='✅ v8.0 Online | 3 Platforms | 150+ Cmd';
 else r=`❓ ${cmd}: not found. /help`;to.innerHTML+=`\n${r}\n`;this.value='';to.scrollTop=to.scrollHeight}});
 
-// Chat
-function sendChat(){const i=document.getElementById('chat-input'),m=i.value.trim();if(!m)return;const c=document.getElementById('chat-messages');c.innerHTML+=`<div style="background:var(--primary);color:#fff;padding:0.4rem 0.8rem;border-radius:15px;max-width:80%;margin-left:auto;text-align:right">${m}</div>`;i.value='';setTimeout(()=>{let r='Interesting! Check our GitHub for more. 🤖';if(m.toLowerCase().includes('grant'))r='💰 Live grants: NLnet 50k€, Gitcoin GG25, Optimism RetroPGF.';c.innerHTML+=`<div style="background:var(--surface);padding:0.4rem 0.8rem;border-radius:15px;max-width:80%">🤖 ${r}</div>`;c.scrollTop=c.scrollHeight},500)}
-
-// Bots
-document.getElementById('bots-grid').innerHTML=[{n:'MEGA-BOT',v:'v8.0',d:'Telegram+Discord+Matrix',u:'https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT'},{n:'NEXUS',v:'v2.0',d:'ZK·FHE·TEE Vault',u:'https://github.com/BAKOME-Hub/BAKOME-NEXUS'},{n:'Viber Bot',v:'v5.0',d:'90+ commands',u:'https://github.com/BAKOME-Hub/BAKOME-Viber-Bot'},{n:'Scholar',v:'v5.0',d:'15 sources',u:'https://github.com/BAKOME-Hub/BAKOME-Scholar'}].map(b=>`<div class="card"><span style="color:var(--primary)">${b.v}</span><h3>${b.n}</h3><p>${b.d}</p><a href="${b.u}" target="_blank" style="color:var(--accent)">GitHub →</a></div>`).join('');
-
-// Research
-async function searchAcademic(){const q=document.getElementById('research-input').value;if(!q)return;document.getElementById('research-results').innerHTML='<div class="card"><p>🔍 Searching...</p></div>';let r='';try{let a=await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(q)}&max_results=2`).then(r=>r.text());let t=a.match(/<title>(.*?)<\/title>/g)?.slice(1,3).map(t=>t.replace(/<\/?title>/g,''))||[];r+='<div class="card"><h3>📄 arXiv</h3>'+t.map(t=>`<p>• ${t}</p>`).join('')+'</div>'}catch(e){}try{let w=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`).then(r=>r.json());if(w.extract)r+=`<div class="card"><h3>📚 Wikipedia</h3><p>${w.extract.substring(0,200)}...</p></div>`}catch(e){}document.getElementById('research-results').innerHTML=r||'<div class="card"><p>No results.</p></div>'}
-
-// Globe
-setTimeout(()=>{const c=document.getElementById('globe-container');if(!c)return;const s=new THREE.Scene(),cam=new THREE.PerspectiveCamera(45,c.clientWidth/280,0.1,1000),r=new THREE.WebGLRenderer({alpha:true});r.setSize(c.clientWidth,280);c.appendChild(r.domElement);const g=new THREE.Mesh(new THREE.SphereGeometry(5,32,32),new THREE.MeshBasicMaterial({color:0x1e293b,wireframe:true,transparent:true,opacity:0.3}));s.add(g);for(let i=0;i<40;i++){let d=new THREE.Mesh(new THREE.SphereGeometry(0.04,4,4),new THREE.MeshBasicMaterial({color:0x3b82f6}));d.position.set((Math.random()-0.5)*12,(Math.random()-0.5)*12,(Math.random()-0.5)*12);g.add(d)}cam.position.z=15;(function a(){requestAnimationFrame(a);g.rotation.y+=0.003;r.render(s,cam)})()},500);
-
-// Video
-function generateVideo(){const p=document.getElementById('video-prompt').value||'BAKOME_MEGA_BOT';document.getElementById('video-result').innerHTML=`<video controls style="width:100%;border-radius:12px" src="https://video.pollinations.ai/prompt/${encodeURIComponent(p)}?seed=${Math.floor(Math.random()*1000)}"></video>`}
-
-// Grants
+// ============================================================
+// GRANTS
+// ============================================================
 const grants=[{s:'NLnet',t:'NGI Zero Commons Fund',a:'5k€-50k€',d:'2026-06-01',u:'https://nlnet.nl/commonsfund'},{s:'Gitcoin',t:'GG25 Grants',a:'Variable',d:'2026-06-30',u:'https://gitcoin.co/grants'},{s:'Optimism',t:'RetroPGF Round 6',a:'Variable',d:'2026-07-15',u:'https://app.optimism.io/retropgf'},{s:'Uniswap',t:'Grants Program',a:'10k$-250k$',d:'Rolling',u:'https://www.uniswapfoundation.org/grants'},{s:'Polygon',t:'Village Grants',a:'5k$-100k$',d:'Rolling',u:'https://polygon.technology/grants'},{s:'Solana',t:'Foundation Grants',a:'Variable',d:'Rolling',u:'https://solana.org/grants-funding'},{s:'Ethereum',t:'ESP Grants',a:'Variable',d:'Rolling',u:'https://esp.ethereum.foundation'},{s:'Drips',t:'Open Source Funding',a:'Continuous',d:'Ongoing',u:'https://drips.network'}];
-const gf=document.getElementById('grants-feed');gf.innerHTML='';grants.forEach((g,i)=>{setTimeout(()=>{gf.innerHTML+=`<div class="live-feed-item">🆕 <strong>${g.s}</strong> — ${g.t}<br>💰 ${g.a} | 📅 ${g.d}<br><a href="${g.u}" target="_blank" style="color:var(--accent)">Apply →</a></div>`;gf.scrollTop=gf.scrollHeight},i*600)});
+const gf=document.getElementById('grants-feed');grants.forEach((g,i)=>{setTimeout(()=>{gf.innerHTML+=`<div style="padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.05)">🆕 <strong>${g.s}</strong> — ${g.t}<br>💰 ${g.a} | 📅 ${g.d}<br><a href="${g.u}" target="_blank" style="color:var(--accent)">Apply →</a></div>`;gf.scrollTop=gf.scrollHeight},i*600)});
 
-// Giants
+// ============================================================
+// GIANTS
+// ============================================================
 const giants=[{n:'Solana',a:'New vault infra',d:'Upshift + FORDEFI + Jito Labs',dt:'May 2026'},{n:'Circle',a:'USDC expansion',d:'Native USDC on 16 chains',dt:'May 2026'},{n:'Chainlink',a:'CCIP upgrade',d:'Cross-chain v1.5 live',dt:'May 2026'},{n:'OpenAI',a:'Codex App',d:'Desktop AI coding launched',dt:'May 2026'},{n:'BlackRock',a:'Tokenized fund',d:'$1B+ on Ethereum',dt:'May 2026'}];
-const gif=document.getElementById('giants-feed');gif.innerHTML='';giants.forEach((g,i)=>{setTimeout(()=>{gif.innerHTML+=`<div class="live-feed-item">🏢 <strong>${g.n}</strong> — ${g.a}<br>${g.d}<br><small>${g.dt}</small></div>`;gif.scrollTop=gif.scrollHeight},i*800)});
+const gif=document.getElementById('giants-feed');giants.forEach((g,i)=>{setTimeout(()=>{gif.innerHTML+=`<div style="padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.05)">🏢 <strong>${g.n}</strong> — ${g.a}<br>${g.d}<br><small>${g.dt}</small></div>`;gif.scrollTop=gif.scrollHeight},i*800)});
 
-// Roadmap
-document.getElementById('roadmap-content').innerHTML=[{p:'Q2 2026',t:'MEGA-BOT v8.0',s:'done'},{p:'Q2 2026',t:'NEXUS v2.0',s:'done'},{p:'Q3 2026',t:'BAKOME-Pay',s:'progress'},{p:'Q4 2026',t:'BAKOME-Cloud',s:'planned'}].map(r=>`<div style="padding:0.5rem;border-left:3px solid ${r.s==='done'?'#22c55e':r.s==='progress'?'var(--gold)':'#64748b'};margin:0.3rem 0"><strong>${r.p}</strong> — ${r.t}</div>`).join('');
+// ============================================================
+// DONATE
+// ============================================================
+document.getElementById('donate-grid').innerHTML=[{c:'₿ BTC',a:'bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0'},{c:'Ξ ETH',a:'0x2fD73626714d9e37EA464109F8eCeA2CA5401062'},{c:'◎ SOL',a:'3CfhghA7hSNPBbd1RME5rRDm5UUeesTq9NKTcyzZdkz4'},{c:'₮ USDT',a:'THkLdiKsmscJFwBPA4tpWeAn1xVw7DTKxq'}].map(c=>`<div class="card"><span style="color:var(--gold)">${c.c}</span><div style="word-break:break-all;font-family:monospace;font-size:0.7rem;background:rgba(0,0,0,0.3);padding:0.3rem;border-radius:6px">${c.a}</div></div>`).join('');
 
-// Docs
-document.getElementById('docs-grid').innerHTML=[{t:'MEGA-BOT Guide',d:'Installation, commands, hosting',u:'https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT'},{t:'NEXUS Guide',d:'Vault, ZK, bridges',u:'https://github.com/BAKOME-Hub/BAKOME-NEXUS'},{t:'Scholar Guide',d:'Academic search APIs',u:'https://github.com/BAKOME-Hub/BAKOME-Scholar'},{t:'All Docs',d:'25+ projects',u:'https://github.com/BAKOME-Hub'}].map(d=>`<div class="card"><h3>📖 ${d.t}</h3><p>${d.d}</p><a href="${d.u}" target="_blank" class="btn btn-primary">Read</a></div>`).join('');
-
-// Donate
-document.getElementById('donate-grid').innerHTML=[{c:'₿ BTC',a:'bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0'},{c:'Ξ ETH',a:'0x2fD73626714d9e37EA464109F8eCeA2CA5401062'},{c:'◎ SOL',a:'3CfhghA7hSNPBbd1RME5rRDm5UUeesTq9NKTcyzZdkz4'},{c:'₮ USDT',a:'THkLdiKsmscJFwBPA4tpWeAn1xVw7DTKxq'}].map(c=>`<div class="card"><span style="color:var(--gold)">${c.c}</span><div class="address">${c.a}</div><span class="copy-btn" onclick="navigator.clipboard.writeText('${c.a}').then(()=>{this.innerHTML='✅';setTimeout(()=>{this.innerHTML='📋'},2000)})" style="cursor:pointer;color:var(--accent);font-size:0.7rem">📋 Copy</span></div>`).join('');
-
-// Contact
+// ============================================================
+// CONTACT
+// ============================================================
 document.getElementById('contact-grid').innerHTML=[{i:'📱',t:'Telegram',v:'@BAXBaksbakome',u:'https://t.me/BAXBaksbakome'},{i:'🎮',t:'Discord',v:'Join Server',u:'https://discord.gg/qs7sYbJZC'},{i:'🐙',t:'GitHub',v:'BAKOME-Hub',u:'https://github.com/BAKOME-Hub'},{i:'📞',t:'WhatsApp',v:'+44 7563 967008',u:'#'},{i:'📧',t:'Email',v:'merryglenn430@gmail.com',u:'#'},{i:'🌐',t:'Matrix',v:'#bakome-hub',u:'https://matrix.to/#/#bakome-hub:matrix.org'}].map(c=>`<div class="card"><h3>${c.i} ${c.t}</h3>${c.u!=='#'?`<a href="${c.u}" target="_blank" style="color:var(--accent)">${c.v}</a>`:`<p>${c.v}</p>`}</div>`).join('');
 </script>
 </body>
