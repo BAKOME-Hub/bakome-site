@@ -20,11 +20,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overf
 .logo{font-size:1.2rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .nav-links{display:flex;gap:0.2rem;flex-wrap:wrap;max-height:180px;overflow-y:auto}
 .nav-links a{color:var(--text);text-decoration:none;font-weight:500;font-size:0.65rem;padding:0.25rem 0.4rem;border-radius:12px;white-space:nowrap}
-.nav-links a:hover,.nav-links a.active{background:var(--primary);color:#fff}
+.nav-links a:hover{background:var(--primary);color:#fff}
 .container{max-width:1400px;margin:0 auto;padding:1rem;position:relative;z-index:1}
-.section{display:none;margin:1.5rem 0}
-.section.active{display:block}
-h2{font-size:1.4rem;margin-bottom:1rem;border-left:4px solid var(--primary);padding-left:0.8rem}
+section{padding:2rem 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+h2{font-size:1.5rem;margin-bottom:1rem;border-left:4px solid var(--primary);padding-left:0.8rem}
 .card{background:var(--card);backdrop-filter:blur(10px);border-radius:var(--radius);padding:1rem;border:1px solid rgba(255,255,255,0.06);transition:all 0.3s}
 .card:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(0,0,0,0.3)}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.8rem}
@@ -32,343 +31,146 @@ h2{font-size:1.4rem;margin-bottom:1rem;border-left:4px solid var(--primary);padd
 .grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.6rem}
 .btn{display:inline-block;padding:0.5rem 1rem;border-radius:50px;font-weight:700;text-decoration:none;margin:0.2rem;cursor:pointer;border:none;font-size:0.8rem;transition:all 0.3s}
 .btn-primary{background:var(--primary);color:#fff}
-.btn-primary:hover{transform:translateY(-1px)}
 .btn-outline{border:2px solid var(--accent);color:var(--accent);background:transparent}
-#terminal-box{background:#000;color:#0f0;font-family:monospace;padding:0.8rem;border-radius:12px;height:220px;overflow-y:auto;font-size:0.8rem}
+#terminal-box{background:#000;color:#0f0;font-family:monospace;padding:0.8rem;border-radius:12px;height:200px;overflow-y:auto;font-size:0.8rem}
 #terminal-box input{background:transparent;border:none;color:#0f0;font-family:monospace;font-size:0.8rem;width:100%;outline:none}
 #globe-container{width:100%;height:280px;border-radius:16px;overflow:hidden;background:#000}
-.address{word-break:break-all;font-family:monospace;font-size:0.7rem;background:rgba(0,0,0,0.3);padding:0.3rem;border-radius:6px;margin:0.2rem 0}
+.address{word-break:break-all;font-family:monospace;font-size:0.7rem;background:rgba(0,0,0,0.3);padding:0.3rem;border-radius:6px}
 .live-feed{max-height:300px;overflow-y:auto}
 .live-feed-item{padding:0.5rem;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.8rem}
-.theme-toggle{position:fixed;bottom:80px;right:20px;z-index:9999;background:var(--surface);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 20px rgba(0,0,0,0.3);font-size:1.2rem}
-.notification{position:fixed;top:20px;right:20px;z-index:10000;background:var(--primary);color:#fff;padding:0.8rem 1.2rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3);animation:slideIn 0.3s ease;display:none}
-@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
-footer{text-align:center;padding:1.5rem;background:var(--surface);border-top:1px solid rgba(255,255,255,0.05);position:relative;z-index:1;margin-top:2rem;font-size:0.75rem}
+.theme-toggle{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--surface);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 20px rgba(0,0,0,0.3);font-size:1.2rem}
+footer{text-align:center;padding:1.5rem;background:var(--surface);border-top:1px solid rgba(255,255,255,0.05);position:relative;z-index:1;font-size:0.75rem}
 @media(min-width:768px){.nav-links a{font-size:0.75rem;padding:0.3rem 0.6rem}}
 </style>
 </head>
 <body>
 <canvas id="particles"></canvas>
-<div class="notification" id="notification"></div>
 <div class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</div>
 
 <nav class="navbar">
 <div class="logo">🏰 BAKOME-Hub</div>
-<div class="nav-links" id="nav-links"></div>
+<div class="nav-links">
+<a href="#home">🏠 Home</a><a href="#chat">💬 Chat</a><a href="#terminal">💻 Terminal</a><a href="#bots">🤖 Bots</a><a href="#research">🔬 Research</a><a href="#globe">🌍 Globe</a><a href="#video">🎥 Video</a><a href="#grants">💰 Grants</a><a href="#giants">🏢 Giants</a><a href="#roadmap">🗺️ Roadmap</a><a href="#docs">📖 Docs</a><a href="#donate">💖 Donate</a><a href="#contact">📞 Contact</a>
+</div>
 </nav>
 
-<div class="container" id="main-content"></div>
+<div class="container">
 
-<footer><p>© 2026 BAKOME-Hub · MIT · Built with passion · <span id="lang-switcher"></span></p></footer>
+<!-- HOME -->
+<section id="home" style="text-align:center">
+<h1 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900">🏰 <span style="background:linear-gradient(135deg,var(--primary),var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent">BAKOME-Hub</span></h1>
+<p style="font-size:1rem;max-width:500px;margin:1rem auto">150+ commands · 3 platforms · AI · Trading · Web3 · Rust · MIT</p>
+<div class="grid4">
+<div class="card" style="text-align:center"><h3>🤖</h3><p>3 Bots</p></div>
+<div class="card" style="text-align:center"><h3>💻</h3><p>150+ Cmd</p></div>
+<div class="card" style="text-align:center"><h3>🌍</h3><p>15 Langues</p></div>
+<div class="card" style="text-align:center"><h3>🦀</h3><p>4000+ Lignes</p></div>
+</div>
+</section>
+
+<!-- CHAT -->
+<section id="chat"><h2>💬 Chat AI</h2>
+<div class="card"><div id="chat-messages" style="height:200px;overflow-y:auto;margin-bottom:0.5rem;padding:0.5rem;background:rgba(0,0,0,0.2);border-radius:12px"><div style="background:var(--surface);padding:0.4rem 0.8rem;border-radius:15px;max-width:80%">🤖 Hello! Ask me anything.</div></div>
+<div style="display:flex;gap:0.5rem"><input type="text" id="chat-input" placeholder="Ask..." style="flex:1;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text)"><button class="btn btn-primary" onclick="sendChat()">Send</button></div></div></section>
+
+<!-- TERMINAL -->
+<section id="terminal"><h2>💻 Live Terminal</h2>
+<div class="card" id="terminal-box"><div id="terminal-output">$ BAKOME_MEGA-BOT v8.0 — Type /help</div><input type="text" id="terminal-input" placeholder="/help, /crypto BTC, /yield..."></div></section>
+
+<!-- BOTS -->
+<section id="bots"><h2>🤖 Our Bots</h2><div class="grid3" id="bots-grid"></div></section>
+
+<!-- RESEARCH -->
+<section id="research"><h2>🔬 Academic Research</h2>
+<div style="display:flex;gap:0.5rem;margin-bottom:1rem"><input type="text" id="research-input" placeholder="Search arXiv, Wikipedia..." style="flex:1;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text)"><button class="btn btn-primary" onclick="searchAcademic()">🔍</button></div>
+<div id="research-results" class="grid2"></div></section>
+
+<!-- GLOBE -->
+<section id="globe"><h2>🌍 Users Worldwide</h2><div id="globe-container"></div></section>
+
+<!-- VIDEO -->
+<section id="video"><h2>🎥 AI Video Generator</h2>
+<div class="card"><input type="text" id="video-prompt" placeholder="Describe your video..." style="width:100%;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text);margin-bottom:0.5rem"><button class="btn btn-primary" onclick="generateVideo()">🎥 Generate</button><div id="video-result" style="margin-top:1rem"></div></div></section>
+
+<!-- GRANTS LIVE -->
+<section id="grants"><h2>💰 Live Grants Feed</h2><div class="card live-feed" id="grants-feed"><p>Loading grants...</p></div></section>
+
+<!-- GIANTS LIVE -->
+<section id="giants"><h2>🏢 Live Giants Feed</h2><div class="card live-feed" id="giants-feed"><p>Loading giants news...</p></div></section>
+
+<!-- ROADMAP -->
+<section id="roadmap"><h2>🗺️ Roadmap</h2><div class="card" id="roadmap-content"></div></section>
+
+<!-- DOCS -->
+<section id="docs"><h2>📖 Documentation</h2><div class="grid2" id="docs-grid"></div></section>
+
+<!-- DONATE -->
+<section id="donate"><h2>💖 Support Open Source</h2><div class="grid2" id="donate-grid"></div></section>
+
+<!-- CONTACT -->
+<section id="contact"><h2>📞 Contact</h2><div class="grid3" id="contact-grid"></div></section>
+
+</div>
+
+<footer><p>© 2026 BAKOME-Hub · MIT · Built with passion</p></footer>
 
 <script>
-// ============================================================
-// MULTI-LANGUES
-// ============================================================
-const LANGUAGES = ['en','fr','es','de','zh','ja','ru','ar','hi','pt','it','ko','tr','nl','pl'];
-let currentLang = navigator.language.split('-')[0] || 'en';
-if(!LANGUAGES.includes(currentLang)) currentLang = 'en';
-
-const translations = {
-  donate: {en:'Donate',fr:'Faire un don',es:'Donar',de:'Spenden',zh:'捐款',ja:'寄付',ru:'Пожертвовать',ar:'تبرع',hi:'दान',pt:'Doar',it:'Donare',ko:'기부',tr:'Bağış',nl:'Doneren',pl:'Darowizna'},
-  bots: {en:'Bots',fr:'Robots',es:'Bots',de:'Bots',zh:'机器人',ja:'ボット',ru:'Боты',ar:'بوتات',hi:'बॉट',pt:'Bots',it:'Bot',ko:'봇',tr:'Botlar',nl:'Bots',pl:'Boty'},
-  contact: {en:'Contact',fr:'Contact',es:'Contacto',de:'Kontakt',zh:'联系',ja:'連絡',ru:'Контакты',ar:'اتصال',hi:'संपर्क',pt:'Contato',it:'Contatto',ko:'연락처',tr:'İletişim',nl:'Contact',pl:'Kontakt'},
-  home: {en:'Home',fr:'Accueil',es:'Inicio',de:'Start',zh:'首页',ja:'ホーム',ru:'Главная',ar:'الرئيسية',hi:'होम',pt:'Início',it:'Home',ko:'홈',tr:'Ana Sayfa',nl:'Home',pl:'Strona główna'}
-};
-
-function t(key){return (translations[key]||{})[currentLang]||key}
-
-// ============================================================
-// SECTIONS
-// ============================================================
-const SECTIONS = [
-  {id:'home',icon:'🏠',label:t('home')},
-  {id:'chat',icon:'💬',label:'Chat AI'},
-  {id:'terminal',icon:'💻',label:'Terminal'},
-  {id:'bots',icon:'🤖',label:t('bots')},
-  {id:'research',icon:'🔬',label:'Research'},
-  {id:'globe',icon:'🌍',label:'Globe'},
-  {id:'video',icon:'🎥',label:'Video'},
-  {id:'blog',icon:'📝',label:'Blog'},
-  {id:'grants',icon:'💰',label:'Grants'},
-  {id:'giants',icon:'🏢',label:'Giants'},
-  {id:'roadmap',icon:'🗺️',label:'Roadmap'},
-  {id:'sandbox',icon:'🧪',label:'Sandbox'},
-  {id:'faq',icon:'❓',label:'FAQ'},
-  {id:'docs',icon:'📖',label:'Docs'},
-  {id:'donate',icon:'💖',label:t('donate')},
-  {id:'brokers',icon:'📈',label:'Brokers'},
-  {id:'contact',icon:'📞',label:t('contact')}
-];
-
-document.getElementById('nav-links').innerHTML = SECTIONS.map(s => `<a href="#${s.id}" onclick="showSection('${s.id}')">${s.icon} ${s.label}</a>`).join('');
-document.getElementById('main-content').innerHTML = SECTIONS.map(s => `<div id="${s.id}" class="section${s.id==='home'?' active':''}"></div>`).join('');
-
 // Theme
-function toggleTheme(){
-  const html = document.documentElement;
-  const current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current==='dark'?'light':'dark');
-  document.getElementById('theme-btn').textContent = current==='dark'?'🌙':'☀️';
-  localStorage.setItem('theme', current==='dark'?'light':'dark');
-}
-const savedTheme = localStorage.getItem('theme')||'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
-document.getElementById('theme-btn').textContent = savedTheme==='dark'?'🌙':'☀️';
-
-// Section switcher
-function showSection(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  const link = document.querySelector(`.nav-links a[href="#${id}"]`);
-  if(link) link.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  initSection(id);
-}
-
-// Notification
-function notify(msg){const n=document.getElementById('notification');n.textContent=msg;n.style.display='block';setTimeout(()=>n.style.display='none',4000);}
+function toggleTheme(){const h=document.documentElement;const c=h.getAttribute('data-theme');h.setAttribute('data-theme',c==='dark'?'light':'dark');document.getElementById('theme-btn').textContent=c==='dark'?'🌙':'☀️';localStorage.setItem('theme',c==='dark'?'light':'dark')}
+const st=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',st);document.getElementById('theme-btn').textContent=st==='dark'?'🌙':'☀️';
 
 // Particles
-const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
-let particles=[];
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');let particles=[];
 function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
 resize();window.addEventListener('resize',resize);
 class Particle{constructor(){this.reset()}reset(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*2+0.5;this.speedX=Math.random()*0.3-0.15;this.speedY=Math.random()*0.3-0.15;this.opacity=Math.random()*0.5+0.1}update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>canvas.width)this.speedX*=-1;if(this.y<0||this.y>canvas.height)this.speedY*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=`rgba(59,130,246,${this.opacity})`;ctx.fill()}}
 for(let i=0;i<50;i++)particles.push(new Particle());
 function anim(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw()});requestAnimationFrame(anim)}anim();
 
-// ============================================================
-// INIT SECTIONS
-// ============================================================
-function initSection(id){
-  switch(id){
-    case 'home': initHome(); break;
-    case 'chat': initChat(); break;
-    case 'terminal': initTerminal(); break;
-    case 'bots': initBots(); break;
-    case 'research': initResearch(); break;
-    case 'globe': initGlobe(); break;
-    case 'video': initVideo(); break;
-    case 'blog': initBlog(); break;
-    case 'grants': initGrants(); break;
-    case 'giants': initGiants(); break;
-    case 'roadmap': initRoadmap(); break;
-    case 'sandbox': initSandbox(); break;
-    case 'faq': initFAQ(); break;
-    case 'docs': initDocs(); break;
-    case 'donate': initDonate(); break;
-    case 'brokers': initBrokers(); break;
-    case 'contact': initContact(); break;
-  }
-}
+// Terminal
+const ti=document.getElementById('terminal-input'),to=document.getElementById('terminal-output');
+ti.addEventListener('keydown',function(e){if(e.key==='Enter'){let cmd=this.value.trim();to.innerHTML+=`\n$ ${cmd}`;let r='';
+if(cmd==='/help')r='Commands: /crypto /gold /forex /yield /status /donate /grants /bridge /zk';
+else if(cmd.startsWith('/crypto'))r=`💰 ${(cmd.split(' ')[1]||'BTC').toUpperCase()} = $${(Math.random()*100000).toFixed(2)} USDT`;
+else if(cmd==='/yield')r='🌾 Top: solana:Jito 45.4% | polygon:Curve 48.6%';
+else if(cmd==='/grants')r='💰 Live: NLnet 50k€ | Gitcoin GG25 | Optimism RetroPGF';
+else if(cmd==='/status')r='✅ v8.0 Online | 3 Platforms | 150+ Cmd';
+else r=`❓ ${cmd}: not found. /help`;to.innerHTML+=`\n${r}\n`;this.value='';to.scrollTop=to.scrollHeight}});
 
-function initHome(){
-  document.getElementById('home').innerHTML = `<div style="text-align:center;padding:2rem 0">
-    <h1 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:900">🏰 <span style="background:linear-gradient(135deg,var(--primary),var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent">BAKOME-Hub</span></h1>
-    <p style="font-size:1rem;max-width:500px;margin:1rem auto">150+ commands · 3 platforms · AI · Trading · Web3 · Rust · MIT</p>
-    <div class="grid4">
-      <div class="card" style="text-align:center"><h3>🤖</h3><p>3 Bots</p></div>
-      <div class="card" style="text-align:center"><h3>💻</h3><p>150+ Cmd</p></div>
-      <div class="card" style="text-align:center"><h3>🌍</h3><p>15 Langues</p></div>
-      <div class="card" style="text-align:center"><h3>🦀</h3><p>4000+ Lignes</p></div>
-    </div>
-    <div style="margin-top:1rem">
-      <a href="#chat" class="btn btn-primary" onclick="showSection('chat')">💬 Chat AI</a>
-      <a href="#grants" class="btn btn-primary" onclick="showSection('grants')">💰 Live Grants</a>
-      <a href="#giants" class="btn btn-primary" onclick="showSection('giants')">🏢 Live Giants</a>
-      <a href="#donate" class="btn btn-outline" onclick="showSection('donate')">💖 Donate</a>
-    </div>
-  </div>`;
-}
+// Chat
+function sendChat(){const i=document.getElementById('chat-input'),m=i.value.trim();if(!m)return;const c=document.getElementById('chat-messages');c.innerHTML+=`<div style="background:var(--primary);color:#fff;padding:0.4rem 0.8rem;border-radius:15px;max-width:80%;margin-left:auto;text-align:right">${m}</div>`;i.value='';setTimeout(()=>{let r='Interesting! Check our GitHub for more. 🤖';if(m.toLowerCase().includes('grant'))r='💰 Live grants: NLnet 50k€, Gitcoin GG25, Optimism RetroPGF.';c.innerHTML+=`<div style="background:var(--surface);padding:0.4rem 0.8rem;border-radius:15px;max-width:80%">🤖 ${r}</div>`;c.scrollTop=c.scrollHeight},500)}
 
-function initChat(){
-  document.getElementById('chat').innerHTML = `<h2>💬 Chat AI (DeepSeek)</h2>
-    <div class="card"><div id="chat-messages" style="height:220px;overflow-y:auto;margin-bottom:0.5rem;padding:0.5rem;background:rgba(0,0,0,0.2);border-radius:12px"><div style="background:var(--surface);padding:0.4rem 0.8rem;border-radius:15px;max-width:80%">🤖 Hello! Ask me anything. For real AI, connect DeepSeek API key in settings.</div></div>
-    <div style="display:flex;gap:0.5rem"><input type="text" id="chat-input" placeholder="Ask..." style="flex:1;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text)"><button class="btn btn-primary" onclick="sendChat()">Send</button></div></div>`;
-}
+// Bots
+document.getElementById('bots-grid').innerHTML=[{n:'MEGA-BOT',v:'v8.0',d:'Telegram+Discord+Matrix',u:'https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT'},{n:'NEXUS',v:'v2.0',d:'ZK·FHE·TEE Vault',u:'https://github.com/BAKOME-Hub/BAKOME-NEXUS'},{n:'Viber Bot',v:'v5.0',d:'90+ commands',u:'https://github.com/BAKOME-Hub/BAKOME-Viber-Bot'},{n:'Scholar',v:'v5.0',d:'15 sources',u:'https://github.com/BAKOME-Hub/BAKOME-Scholar'}].map(b=>`<div class="card"><span style="color:var(--primary)">${b.v}</span><h3>${b.n}</h3><p>${b.d}</p><a href="${b.u}" target="_blank" style="color:var(--accent)">GitHub →</a></div>`).join('');
 
-function sendChat(){
-  const input=document.getElementById('chat-input'),msg=input.value.trim();
-  if(!msg) return;
-  const c=document.getElementById('chat-messages');
-  c.innerHTML+=`<div style="background:var(--primary);color:#fff;padding:0.4rem 0.8rem;border-radius:15px;max-width:80%;margin-left:auto;text-align:right">${msg}</div>`;
-  input.value='';
-  setTimeout(()=>{
-    let r='Interesting! For a full AI experience, add your DeepSeek API key. Meanwhile, check /help in Terminal. 🤖';
-    if(msg.toLowerCase().includes('grant')) r='💰 Live grants available: NLnet NGI Zero (50k€), Gitcoin GG25, Optimism RetroPGF. Check the Grants section!';
-    if(msg.toLowerCase().includes('donate')) r='💖 Support us via BTC, ETH, SOL, USDT. Every donation helps keep our tools free and open source.';
-    c.innerHTML+=`<div style="background:var(--surface);padding:0.4rem 0.8rem;border-radius:15px;max-width:80%">🤖 ${r}</div>`;
-    c.scrollTop=c.scrollHeight;
-  },500);
-}
+// Research
+async function searchAcademic(){const q=document.getElementById('research-input').value;if(!q)return;document.getElementById('research-results').innerHTML='<div class="card"><p>🔍 Searching...</p></div>';let r='';try{let a=await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(q)}&max_results=2`).then(r=>r.text());let t=a.match(/<title>(.*?)<\/title>/g)?.slice(1,3).map(t=>t.replace(/<\/?title>/g,''))||[];r+='<div class="card"><h3>📄 arXiv</h3>'+t.map(t=>`<p>• ${t}</p>`).join('')+'</div>'}catch(e){}try{let w=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`).then(r=>r.json());if(w.extract)r+=`<div class="card"><h3>📚 Wikipedia</h3><p>${w.extract.substring(0,200)}...</p></div>`}catch(e){}document.getElementById('research-results').innerHTML=r||'<div class="card"><p>No results.</p></div>'}
 
-function initTerminal(){
-  document.getElementById('terminal').innerHTML = `<h2>💻 Live Terminal</h2>
-    <div class="card" id="terminal-box"><div id="terminal-output">$ BAKOME_MEGA-BOT v8.0 — Type /help</div><input type="text" id="terminal-input" placeholder="/help, /crypto BTC, /yield, /status..."></div>`;
-  const ti=document.getElementById('terminal-input'),to=document.getElementById('terminal-output');
-  ti.addEventListener('keydown',function(e){if(e.key==='Enter'){let cmd=this.value.trim();to.innerHTML+=`\n$ ${cmd}`;let r='';
-  if(cmd==='/help')r='Commands: /crypto /gold /forex /yield /status /donate /grants /bridge /zk /help';
-  else if(cmd.startsWith('/crypto')){let s=cmd.split(' ')[1]||'BTC';r=`💰 ${s.toUpperCase()} = $${(Math.random()*100000).toFixed(2)} USDT`}
-  else if(cmd==='/yield')r='🌾 Top: solana:Jito 45.4% | polygon:Curve 48.6%';
-  else if(cmd==='/grants')r='💰 Live: NLnet 50k€ | Gitcoin GG25 | Optimism RetroPGF';
-  else if(cmd==='/status')r='✅ v8.0 Online | 3 Platforms | 150+ Cmd';
-  else r=`❓ ${cmd}: not found. /help`;
-  to.innerHTML+=`\n${r}\n`;this.value='';to.scrollTop=to.scrollHeight}});
-}
+// Globe
+setTimeout(()=>{const c=document.getElementById('globe-container');if(!c)return;const s=new THREE.Scene(),cam=new THREE.PerspectiveCamera(45,c.clientWidth/280,0.1,1000),r=new THREE.WebGLRenderer({alpha:true});r.setSize(c.clientWidth,280);c.appendChild(r.domElement);const g=new THREE.Mesh(new THREE.SphereGeometry(5,32,32),new THREE.MeshBasicMaterial({color:0x1e293b,wireframe:true,transparent:true,opacity:0.3}));s.add(g);for(let i=0;i<40;i++){let d=new THREE.Mesh(new THREE.SphereGeometry(0.04,4,4),new THREE.MeshBasicMaterial({color:0x3b82f6}));d.position.set((Math.random()-0.5)*12,(Math.random()-0.5)*12,(Math.random()-0.5)*12);g.add(d)}cam.position.z=15;(function a(){requestAnimationFrame(a);g.rotation.y+=0.003;r.render(s,cam)})()},500);
 
-function initBots(){
-  document.getElementById('bots').innerHTML = `<h2>🤖 Our Bots</h2><div class="grid3">${[
-    {name:'MEGA-BOT',ver:'v8.0',desc:'Telegram+Discord+Matrix',url:'https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT'},
-    {name:'NEXUS',ver:'v2.0',desc:'ZK·FHE·TEE Vault',url:'https://github.com/BAKOME-Hub/BAKOME-NEXUS'},
-    {name:'Viber Bot',ver:'v5.0',desc:'90+ commands',url:'https://github.com/BAKOME-Hub/BAKOME-Viber-Bot'},
-    {name:'Scholar',ver:'v5.0',desc:'15 sources',url:'https://github.com/BAKOME-Hub/BAKOME-Scholar'}
-  ].map(b=>`<div class="card"><span style="color:var(--primary)">${b.ver}</span><h3>${b.name}</h3><p>${b.desc}</p><a href="${b.url}" target="_blank" style="color:var(--accent)">GitHub →</a></div>`).join('')}</div>`;
-}
+// Video
+function generateVideo(){const p=document.getElementById('video-prompt').value||'BAKOME_MEGA_BOT';document.getElementById('video-result').innerHTML=`<video controls style="width:100%;border-radius:12px" src="https://video.pollinations.ai/prompt/${encodeURIComponent(p)}?seed=${Math.floor(Math.random()*1000)}"></video>`}
 
-function initResearch(){
-  document.getElementById('research').innerHTML = `<h2>🔬 Academic Research</h2>
-    <div style="display:flex;gap:0.5rem;margin-bottom:1rem"><input type="text" id="research-input" placeholder="Search..." style="flex:1;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text)"><button class="btn btn-primary" onclick="searchAcademic()">🔍</button></div>
-    <div id="research-results" class="grid2"></div>`;
-}
+// Grants
+const grants=[{s:'NLnet',t:'NGI Zero Commons Fund',a:'5k€-50k€',d:'2026-06-01',u:'https://nlnet.nl/commonsfund'},{s:'Gitcoin',t:'GG25 Grants',a:'Variable',d:'2026-06-30',u:'https://gitcoin.co/grants'},{s:'Optimism',t:'RetroPGF Round 6',a:'Variable',d:'2026-07-15',u:'https://app.optimism.io/retropgf'},{s:'Uniswap',t:'Grants Program',a:'10k$-250k$',d:'Rolling',u:'https://www.uniswapfoundation.org/grants'},{s:'Polygon',t:'Village Grants',a:'5k$-100k$',d:'Rolling',u:'https://polygon.technology/grants'},{s:'Solana',t:'Foundation Grants',a:'Variable',d:'Rolling',u:'https://solana.org/grants-funding'},{s:'Ethereum',t:'ESP Grants',a:'Variable',d:'Rolling',u:'https://esp.ethereum.foundation'},{s:'Drips',t:'Open Source Funding',a:'Continuous',d:'Ongoing',u:'https://drips.network'}];
+const gf=document.getElementById('grants-feed');gf.innerHTML='';grants.forEach((g,i)=>{setTimeout(()=>{gf.innerHTML+=`<div class="live-feed-item">🆕 <strong>${g.s}</strong> — ${g.t}<br>💰 ${g.a} | 📅 ${g.d}<br><a href="${g.u}" target="_blank" style="color:var(--accent)">Apply →</a></div>`;gf.scrollTop=gf.scrollHeight},i*600)});
 
-async function searchAcademic(){
-  const q=document.getElementById('research-input').value;if(!q)return;
-  document.getElementById('research-results').innerHTML='<div class="card"><p>🔍 Searching...</p></div>';
-  let r='';
-  try{let arxiv=await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(q)}&max_results=2`).then(r=>r.text());let titles=arxiv.match(/<title>(.*?)<\/title>/g)?.slice(1,3).map(t=>t.replace(/<\/?title>/g,''))||[];r+='<div class="card"><h3>📄 arXiv</h3>'+titles.map(t=>`<p>• ${t}</p>`).join('')+'</div>'}catch(e){}
-  try{let wiki=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`).then(r=>r.json());if(wiki.extract)r+=`<div class="card"><h3>📚 Wikipedia</h3><p>${wiki.extract.substring(0,200)}...</p></div>`}catch(e){}
-  document.getElementById('research-results').innerHTML=r||'<div class="card"><p>No results.</p></div>';
-}
+// Giants
+const giants=[{n:'Solana',a:'New vault infra',d:'Upshift + FORDEFI + Jito Labs',dt:'May 2026'},{n:'Circle',a:'USDC expansion',d:'Native USDC on 16 chains',dt:'May 2026'},{n:'Chainlink',a:'CCIP upgrade',d:'Cross-chain v1.5 live',dt:'May 2026'},{n:'OpenAI',a:'Codex App',d:'Desktop AI coding launched',dt:'May 2026'},{n:'BlackRock',a:'Tokenized fund',d:'$1B+ on Ethereum',dt:'May 2026'}];
+const gif=document.getElementById('giants-feed');gif.innerHTML='';giants.forEach((g,i)=>{setTimeout(()=>{gif.innerHTML+=`<div class="live-feed-item">🏢 <strong>${g.n}</strong> — ${g.a}<br>${g.d}<br><small>${g.dt}</small></div>`;gif.scrollTop=gif.scrollHeight},i*800)});
 
-function initGlobe(){
-  document.getElementById('globe').innerHTML=`<h2>🌍 Users Worldwide</h2><div id="globe-container"></div>`;
-  setTimeout(()=>{const c=document.getElementById('globe-container');if(!c)return;const s=new THREE.Scene(),cam=new THREE.PerspectiveCamera(45,c.clientWidth/280,0.1,1000),r=new THREE.WebGLRenderer({alpha:true});r.setSize(c.clientWidth,280);c.appendChild(r.domElement);const g=new THREE.Mesh(new THREE.SphereGeometry(5,32,32),new THREE.MeshBasicMaterial({color:0x1e293b,wireframe:true,transparent:true,opacity:0.3}));s.add(g);for(let i=0;i<40;i++){let d=new THREE.Mesh(new THREE.SphereGeometry(0.04,4,4),new THREE.MeshBasicMaterial({color:0x3b82f6}));d.position.set((Math.random()-0.5)*12,(Math.random()-0.5)*12,(Math.random()-0.5)*12);g.add(d)}cam.position.z=15;(function a(){requestAnimationFrame(a);g.rotation.y+=0.003;r.render(s,cam)})()},300);
-}
+// Roadmap
+document.getElementById('roadmap-content').innerHTML=[{p:'Q2 2026',t:'MEGA-BOT v8.0',s:'done'},{p:'Q2 2026',t:'NEXUS v2.0',s:'done'},{p:'Q3 2026',t:'BAKOME-Pay',s:'progress'},{p:'Q4 2026',t:'BAKOME-Cloud',s:'planned'}].map(r=>`<div style="padding:0.5rem;border-left:3px solid ${r.s==='done'?'#22c55e':r.s==='progress'?'var(--gold)':'#64748b'};margin:0.3rem 0"><strong>${r.p}</strong> — ${r.t}</div>`).join('');
 
-function initVideo(){
-  document.getElementById('video').innerHTML=`<h2>🎥 AI Video Generator</h2><div class="card"><input type="text" id="video-prompt" placeholder="Describe your video..." style="width:100%;padding:0.5rem;border-radius:20px;border:1px solid #334155;background:var(--surface);color:var(--text);margin-bottom:0.5rem"><button class="btn btn-primary" onclick="generateVideo()">🎥 Generate</button><div id="video-result" style="margin-top:1rem"></div></div>`;
-}
-function generateVideo(){const p=document.getElementById('video-prompt').value||'BAKOME_MEGA_BOT';document.getElementById('video-result').innerHTML=`<video controls style="width:100%;border-radius:12px" src="https://video.pollinations.ai/prompt/${encodeURIComponent(p)}?seed=${Math.floor(Math.random()*1000)}"></video>`;}
+// Docs
+document.getElementById('docs-grid').innerHTML=[{t:'MEGA-BOT Guide',d:'Installation, commands, hosting',u:'https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT'},{t:'NEXUS Guide',d:'Vault, ZK, bridges',u:'https://github.com/BAKOME-Hub/BAKOME-NEXUS'},{t:'Scholar Guide',d:'Academic search APIs',u:'https://github.com/BAKOME-Hub/BAKOME-Scholar'},{t:'All Docs',d:'25+ projects',u:'https://github.com/BAKOME-Hub'}].map(d=>`<div class="card"><h3>📖 ${d.t}</h3><p>${d.d}</p><a href="${d.u}" target="_blank" class="btn btn-primary">Read</a></div>`).join('');
 
-function initBlog(){
-  document.getElementById('blog').innerHTML=`<h2>📝 AI Blog</h2><div class="grid2">${[{t:'Why Rust is the Future',d:'May 2026',e:'Rust combines performance with safety.'},{t:'Building Multi-Platform Bots',d:'May 2026',e:'How BAKOME_MEGA-BOT unifies 3 platforms.'},{t:'ZK-Proofs Explained',d:'May 2026',e:'How ZK-proofs enable transparency.'}].map(p=>`<div class="card"><h3>${p.t}</h3><p style="font-size:0.7rem;opacity:0.7">${p.d}</p><p>${p.e}</p></div>`).join('')}</div>`;
-}
+// Donate
+document.getElementById('donate-grid').innerHTML=[{c:'₿ BTC',a:'bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0'},{c:'Ξ ETH',a:'0x2fD73626714d9e37EA464109F8eCeA2CA5401062'},{c:'◎ SOL',a:'3CfhghA7hSNPBbd1RME5rRDm5UUeesTq9NKTcyzZdkz4'},{c:'₮ USDT',a:'THkLdiKsmscJFwBPA4tpWeAn1xVw7DTKxq'}].map(c=>`<div class="card"><span style="color:var(--gold)">${c.c}</span><div class="address">${c.a}</div><span class="copy-btn" onclick="navigator.clipboard.writeText('${c.a}').then(()=>{this.innerHTML='✅';setTimeout(()=>{this.innerHTML='📋'},2000)})" style="cursor:pointer;color:var(--accent);font-size:0.7rem">📋 Copy</span></div>`).join('');
 
-// ============================================================
-// LIVE GRANTS (subventions temps réel)
-// ============================================================
-function initGrants(){
-  document.getElementById('grants').innerHTML=`<h2>💰 Live Grants Feed</h2><div class="card live-feed" id="grants-feed"></div>`;
-  const grants = [
-    {source:'NLnet',title:'NGI Zero Commons Fund',amount:'5k€ - 50k€',deadline:'2026-06-01',url:'https://nlnet.nl/commonsfund'},
-    {source:'Gitcoin',title:'GG25 Grants Round',amount:'Variable + matching',deadline:'2026-06-30',url:'https://gitcoin.co/grants'},
-    {source:'Optimism',title:'RetroPGF Round 6',amount:'Variable',deadline:'2026-07-15',url:'https://app.optimism.io/retropgf'},
-    {source:'Uniswap Foundation',title:'Uniswap Grants',amount:'10k$ - 250k$',deadline:'Rolling',url:'https://www.uniswapfoundation.org/grants'},
-    {source:'Polygon',title:'Village Grants',amount:'5k$ - 100k$',deadline:'Rolling',url:'https://polygon.technology/grants'},
-    {source:'Solana Foundation',title:'Solana Grants',amount:'Variable',deadline:'Rolling',url:'https://solana.org/grants-funding'},
-    {source:'Ethereum Foundation',title:'ESP Grants',amount:'Variable',deadline:'Rolling',url:'https://esp.ethereum.foundation'},
-    {source:'Drips Network',title:'Open Source Funding',amount:'Continuous',deadline:'Ongoing',url:'https://drips.network'}
-  ];
-  const feed = document.getElementById('grants-feed');
-  grants.forEach((g,i) => {
-    setTimeout(() => {
-      feed.innerHTML += `<div class="live-feed-item">🆕 <strong>${g.source}</strong> — ${g.title}<br>💰 ${g.amount} | 📅 ${g.deadline}<br><a href="${g.url}" target="_blank" style="color:var(--accent)">Apply →</a></div>`;
-      feed.scrollTop = feed.scrollHeight;
-      if(i === grants.length - 1) notify('📢 8 live grants available! Check Grants section.');
-    }, i * 800);
-  });
-}
-
-// ============================================================
-// LIVE GIANTS (actualités Web3)
-// ============================================================
-function initGiants(){
-  document.getElementById('giants').innerHTML=`<h2>🏢 Live Giants Feed</h2><div class="card live-feed" id="giants-feed"></div>`;
-  const giants = [
-    {name:'Solana',action:'New vault infrastructure',desc:'Upshift + FORDEFI + Jito Labs launch Solana vault standard',date:'May 2026'},
-    {name:'Circle',action:'USDC expansion',desc:'Native USDC now on 16 blockchains',date:'May 2026'},
-    {name:'Chainlink',action:'CCIP upgrade',desc:'Cross-chain interoperability protocol v1.5 live',date:'May 2026'},
-    {name:'OpenAI',action:'Codex App',desc:'New desktop app for AI-powered coding launched',date:'May 2026'},
-    {name:'GitHub',action:'Copilot update',desc:'AI agent marketplace for developers',date:'May 2026'},
-    {name:'Anthropic',action:'Claude Code',desc:'Terminal-native AI coding agent released',date:'May 2026'},
-    {name:'BlackRock',action:'Tokenized fund',desc:'$1B+ in tokenized assets on Ethereum',date:'May 2026'},
-    {name:'EU Commission',action:'MiCA regulation',desc:'Full MiCA framework active for crypto assets',date:'May 2026'}
-  ];
-  const feed = document.getElementById('giants-feed');
-  giants.forEach((g,i) => {
-    setTimeout(() => {
-      feed.innerHTML += `<div class="live-feed-item">🏢 <strong>${g.name}</strong> — ${g.action}<br>${g.desc}<br><small>${g.date}</small></div>`;
-      feed.scrollTop = feed.scrollHeight;
-      if(i === giants.length - 1) notify('🏢 8 giants tracked! Check Giants section.');
-    }, i * 1000);
-  });
-}
-
-function initRoadmap(){
-  document.getElementById('roadmap').innerHTML=`<h2>🗺️ Roadmap</h2><div class="card">${[
-    {p:'Q2 2026',t:'MEGA-BOT v8.0',s:'done',d:'150+ commands'},
-    {p:'Q2 2026',t:'NEXUS v2.0',s:'done',d:'ZK·FHE·TEE'},
-    {p:'Q3 2026',t:'BAKOME-Pay',s:'progress',d:'Crypto payments'},
-    {p:'Q4 2026',t:'BAKOME-Cloud',s:'planned',d:'Decentralized storage'}
-  ].map(r=>`<div style="padding:0.5rem;border-left:3px solid ${r.s==='done'?'#22c55e':r.s==='progress'?'var(--gold)':'#64748b'};margin:0.3rem 0"><strong>${r.p}</strong> — ${r.t}<br><small>${r.d}</small></div>`).join('')}</div>`;
-}
-
-function initSandbox(){
-  document.getElementById('sandbox').innerHTML=`<h2>🧪 Code Sandbox</h2><div class="card"><textarea id="sandbox-code" placeholder="println!(\"Hello\");" style="width:100%;height:120px;background:#000;color:#0f0;font-family:monospace;padding:0.8rem;border-radius:12px;border:1px solid #334155"></textarea><button class="btn btn-primary" style="margin-top:0.5rem" onclick="runSandbox()">▶️ Run</button><pre id="sandbox-output" style="margin-top:0.5rem;background:#000;color:#0f0;padding:0.8rem;border-radius:12px;font-family:monospace;min-height:40px"></pre></div>`;
-}
-function runSandbox(){document.getElementById('sandbox-output').textContent='$ cargo run\n> Hello, BAKOME!\n✓ Done';}
-
-function initFAQ(){
-  document.getElementById('faq').innerHTML=`<h2>❓ FAQ</h2><div class="grid2">${[{q:'Is BAKOME free?',a:'Yes! 100% MIT open source. Free forever.'},{q:'How to donate?',a:'BTC, ETH, SOL, USDT, BNB. Check Donate section.'},{q:'Platforms?',a:'Telegram, Discord, Matrix.'},{q:'Commands?',a:'150+ commands.'},{q:'Contribute?',a:'github.com/BAKOME-Hub'},{q:'Built on?',a:'Pixel 4a 5G using Termux.'}].map(f=>`<div class="card"><h3>${f.q}</h3><p>${f.a}</p></div>`).join('')}</div>`;
-}
-
-function initDocs(){
-  document.getElementById('docs').innerHTML=`<h2>📖 Documentation</h2><div class="grid2">${[
-    {t:'MEGA-BOT Guide',d:'Installation, commands, hosting',u:'https://github.com/BAKOME-Hub/BAKOME_MEGA-BOT'},
-    {t:'NEXUS Guide',d:'Vault creation, ZK-proofs, bridges',u:'https://github.com/BAKOME-Hub/BAKOME-NEXUS'},
-    {t:'Viber Bot Guide',d:'Webhook setup, 90+ commands',u:'https://github.com/BAKOME-Hub/BAKOME-Viber-Bot'},
-    {t:'Scholar Guide',d:'Academic search, APIs',u:'https://github.com/BAKOME-Hub/BAKOME-Scholar'}
-  ].map(d=>`<div class="card"><h3>📖 ${d.t}</h3><p>${d.d}</p><a href="${d.u}" target="_blank" class="btn btn-primary">Read Docs</a></div>`).join('')}</div>`;
-}
-
-function initDonate(){
-  document.getElementById('donate').innerHTML=`<h2>💖 Support Open Source</h2><div class="grid2">${[
-    {c:'₿ BTC',a:'bc1qhtjp3qpqru4vuqd355dfcn46mqjrlpdfmngk6u0'},
-    {c:'Ξ ETH',a:'0x2fD73626714d9e37EA464109F8eCeA2CA5401062'},
-    {c:'◎ SOL',a:'3CfhghA7hSNPBbd1RME5rRDm5UUeesTq9NKTcyzZdkz4'},
-    {c:'₮ USDT',a:'THkLdiKsmscJFwBPA4tpWeAn1xVw7DTKxq'}
-  ].map(c=>`<div class="card"><span style="color:var(--gold)">${c.c}</span><div class="address">${c.a}</div><span class="copy-btn" onclick="navigator.clipboard.writeText('${c.a}').then(()=>{this.innerHTML='✅';setTimeout(()=>{this.innerHTML='📋'},2000)})">📋 Copy</span></div>`).join('')}</div>`;
-}
-
-function initBrokers(){
-  document.getElementById('brokers').innerHTML=`<h2>📈 Regulated Brokers</h2><div class="grid3">
-    <div class="card"><h3>📊 JustMarkets</h3><a href="https://one.justmarkets.link/a/tu3o8r0h4i" target="_blank" class="btn btn-primary">Sign Up</a></div>
-    <div class="card"><h3>📈 XM Global</h3><a href="https://www.xmglobal.com/referral?token=40_uYCTOplCuBEFKmmYPXw" target="_blank" class="btn btn-primary">Sign Up</a></div>
-    <div class="card"><h3>🏦 Airtm</h3><a href="https://app.airtm.com/ivt/bandia5of0uz2n" target="_blank" class="btn btn-primary">Sign Up</a></div>
-  </div>`;
-}
-
-function initContact(){
-  document.getElementById('contact').innerHTML=`<h2>📞 Contact</h2><div class="grid3">
-    <div class="card"><h3>📱 Telegram</h3><a href="https://t.me/BAXBaksbakome" target="_blank">@BAXBaksbakome</a></div>
-    <div class="card"><h3>🎮 Discord</h3><a href="https://discord.gg/qs7sYbJZC" target="_blank">Join Server</a></div>
-    <div class="card"><h3>🐙 GitHub</h3><a href="https://github.com/BAKOME-Hub" target="_blank">BAKOME-Hub</a></div>
-    <div class="card"><h3>📞 WhatsApp</h3><p>+44 7563 967008</p></div>
-    <div class="card"><h3>📧 Email</h3><p>merryglenn430@gmail.com</p></div>
-    <div class="card"><h3>🌐 Matrix</h3><a href="https://matrix.to/#/#bakome-hub:matrix.org" target="_blank">#bakome-hub</a></div>
-  </div>`;
-}
-
-// ============================================================
-// INIT HOME + LIVE FEEDS
-// ============================================================
-initHome();
-setTimeout(() => { notify('💡 Tip: Check the Live Grants and Giants sections!'); }, 5000);
-
-// Language switcher
-document.getElementById('lang-switcher').innerHTML = LANGUAGES.map(l => `<a href="#" onclick="currentLang='${l}';location.reload()" style="color:var(--text);margin:0 0.2rem;font-size:0.7rem">${l.toUpperCase()}</a>`).join(' ');
+// Contact
+document.getElementById('contact-grid').innerHTML=[{i:'📱',t:'Telegram',v:'@BAXBaksbakome',u:'https://t.me/BAXBaksbakome'},{i:'🎮',t:'Discord',v:'Join Server',u:'https://discord.gg/qs7sYbJZC'},{i:'🐙',t:'GitHub',v:'BAKOME-Hub',u:'https://github.com/BAKOME-Hub'},{i:'📞',t:'WhatsApp',v:'+44 7563 967008',u:'#'},{i:'📧',t:'Email',v:'merryglenn430@gmail.com',u:'#'},{i:'🌐',t:'Matrix',v:'#bakome-hub',u:'https://matrix.to/#/#bakome-hub:matrix.org'}].map(c=>`<div class="card"><h3>${c.i} ${c.t}</h3>${c.u!=='#'?`<a href="${c.u}" target="_blank" style="color:var(--accent)">${c.v}</a>`:`<p>${c.v}</p>`}</div>`).join('');
 </script>
 </body>
 </html>
