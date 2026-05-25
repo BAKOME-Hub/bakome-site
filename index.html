@@ -400,7 +400,6 @@ document.addEventListener('keydown', function(e) {
       document.body.style.fontFamily = '"Courier New", monospace';
       let glitch = document.createElement('div');
       glitch.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,255,0,0.03);z-index:9999;pointer-events:none;animation:glitch 0.2s infinite';
-      glitch.id = 'glitch-overlay';
       document.body.appendChild(glitch);
     } else {
       location.reload();
@@ -408,10 +407,14 @@ document.addEventListener('keydown', function(e) {
   }
 });
 </script>
-<div id="cyberpunk-btn" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--primary);color:#000;border:none;border-radius:50%;width:50px;height:50px;font-size:1.5rem;cursor:pointer;box-shadow:0 0 20px rgba(0,255,0,0.5)">🛸</div>
 <script>
-document.getElementById('cyberpunk-btn').addEventListener('click',function(){
   let c=!cyberpunkMode;cyberpunkMode=c;
-  if(c){document.documentElement.style.setProperty('--bg','#000');document.documentElement.style.setProperty('--primary','#0f0');document.documentElement.style.setProperty('--accent','#f0f');document.body.style.fontFamily='"Courier New",monospace';let g=document.createElement('div');g.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,255,0,0.03);z-index:9998;pointer-events:none;animation:glitch 0.2s infinite';g.id='glitch-overlay';document.body.appendChild(g);this.textContent='👾'}else{location.reload()}
 });
+</script>
+<div id="cyberpunk-toggle" style="position:fixed;top:80px;right:10px;z-index:9999;background:var(--primary);color:#fff;border:none;border-radius:30px;padding:10px 15px;font-size:0.9rem;cursor:pointer;box-shadow:0 0 30px rgba(0,255,0,0.6);font-weight:700;font-family:'Inter',sans-serif" onclick="toggleCyberpunk()">🛸 CYBERPUNK</div>
+<script>
+function toggleCyberpunk(){
+  let c=!cyberpunkMode;cyberpunkMode=c;
+  if(c){document.documentElement.style.setProperty('--bg','#000');document.documentElement.style.setProperty('--primary','#0f0');document.documentElement.style.setProperty('--accent','#f0f');document.body.style.fontFamily='"Courier New",monospace';let g=document.createElement('div');g.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,255,0,0.03);z-index:9998;pointer-events:none';g.id='glitch-overlay';document.body.appendChild(g);document.getElementById('cyberpunk-toggle').textContent='👾 NORMAL'}else{location.reload()}
+}
 </script>
